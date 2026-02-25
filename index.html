@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerCoach AI — Bygg ditt CV med AI</title>
+  <meta name="description"
+    content="Jobbcoachen hjälper dig att bygga ett CV i världsklass via en smart AI-intervju. Uppdateras i realtid.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4C3399">
+  <link rel="apple-touch-icon" href="images/icon-192.png">
+</head>
+
+<body class="landing-body">
+
+  <!-- Navigation -->
+  <nav class="landing-nav" id="main-nav">
+    <a href="index.html" class="top-bar-brand">
+      <div class="brand-dot">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" />
+        </svg>
+      </div>
+      CareerCoach AI
+    </a>
+    <div class="nav-links">
+      <a href="#kunskapsbank" class="nav-link">Kunskapsbank</a>
+      <a href="#podcast" class="nav-link">Podcast</a>
+      <a href="interview.html" class="btn-primary-v2" style="padding: 12px 24px; font-size: 0.8rem;">
+        Starta intervjun
+      </a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-badge-v2">
+          <span class="dot"></span>
+          AI-DRIVEN KARRIÄRCOACH · 2026
+        </div>
+        <h1 class="hero-title-v2">
+          Ditt CV.<br>
+          <span class="accent">Omskrivet av AI.</span>
+        </h1>
+        <p class="hero-subtitle-v2">
+          Jobbcoachen intervjuar dig steg för steg och bygger ett professionellt CV i realtid.
+          Inga formulär. Ingen huvudvärk. Bara en konversation som tar dig till nästa nivå.
+        </p>
+        <div class="btn-group">
+          <div class="cta-wrapper">
+            <a href="interview.html" class="btn-primary-v2">
+              Starta Career Intervjun här
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                  clip-rule="evenodd" />
+              </svg>
+            </a>
+            <div class="cta-hint">Klicka här för att starta din CV-hjälp ✨</div>
+          </div>
+          <a href="images/2026_Career_Blueprint.pdf" class="btn-outline-v2" target="_blank">Se vår Blueprint-process</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-card-v2">
+          <img src="images/hero-optimized.jpg" alt="CareerCoach AI — Bygg ditt CV med AI">
+          <div class="hero-card-overlay">
+            <div class="overlay-status">
+              <span class="dot"></span>
+              92% framgångsrate
+            </div>
+            <p id="hero-quote">"Jag fick jobbet tack vare XYZ-formatet!"</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section-v2">
+      <div class="stats-grid-v2">
+        <div class="stat-card-v2">
+          <span class="stat-value-v2">92%</span>
+          <p class="stat-label-v2">större chans att ditt CV får dig närmare en intervju</p>
+        </div>
+        <div class="stat-card-v2">
+          <span class="stat-value-v2">3x</span>
+          <p class="stat-label-v2">snabbare process än traditionellt skrivande</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Podcast Section -->
+    <section class="podcast-section-v2" id="podcast">
+      <div class="podcast-container-v2">
+        <div class="podcast-header-v2">
+          <div class="podcast-brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3m7 10a1 1 0 0 1-1 1 7 7 0 0 1-12 0 1 1 0 0 1-1-1 1 1 0 0 1 1-1 1 1 0 0 1 1 1 5 5 0 0 0 10 0 1 1 0 0 1 1-1 1 1 0 0 1 1 1m-7 8a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1z" />
+            </svg>
+          </div>
+          <div class="podcast-title-wrap">
+            <p>CareerCoach AI Presenterar</p>
+            <h3>Lyssna på vår Podd!</h3>
+          </div>
+        </div>
+
+        <div class="player-main">
+          <p style="margin-bottom: 24px; font-weight: 600; font-size: 1.1rem; color: var(--color-text);">"Vad ska du
+            tänka på när du skriver ditt CV"</p>
+
+          <audio id="podcast-audio" src="Audio/podcast.mp3"></audio>
+
+          <div class="player-controls-v2">
+            <button class="play-pause-v2" id="play-btn">
+              <svg id="play-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              <svg id="pause-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+              </svg>
+            </button>
+
+            <div class="progress-wrap-v2">
+              <div class="progress-bar-v2" id="progress-container">
+                <div class="progress-fill-v2" id="progress-fill"></div>
+              </div>
+              <div class="player-time">
+                <span id="current-time">0:00</span>
+                <span id="total-time">0:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Knowledge Bank Carousel -->
+    <section class="knowledge-section" id="kunskapsbank">
+      <div class="section-header-v2">
+        <div>
+          <h2 class="section-title-v2">Kunskapsbank</h2>
+          <p style="color: var(--color-text-muted); margin-top: 8px;">Tips och tricks för att landa ditt drömjobb</p>
+        </div>
+        <div class="carousel-nav">
+          <button class="nav-btn" id="prev-slide">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <button class="nav-btn" id="next-slide">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="carousel-container">
+        <div class="carousel-track" id="carousel-track">
+          <!-- Slide 1: ATS -->
+          <article class="carousel-item">
+            <div class="carousel-img-wrap">
+              <img src="images/Strategisk ATS-Optimering & Kodning.png" alt="Strategisk ATS-Optimering & Kodning">
+              <span class="carousel-tag">Teknik</span>
+            </div>
+            <div class="carousel-body">
+              <h3>1. Strategisk ATS-Optimering & Kodning</h3>
+              <ul style="list-style: none; padding: 0; margin-bottom: 24px;">
+                <li
+                  style="font-size: 0.85rem; color: var(--color-text-mid); margin-bottom: 8px; display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Koda för algoritmerna:</strong> Säkerställ
+                  att ditt CV passerar de ATS-system som 99,7 % av alla rekryterare använder idag.
+                </li>
+                <li
+                  style="font-size: 0.85rem; color: var(--color-text-mid); margin-bottom: 8px; display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Matcha jobbtiteln:</strong> En exakt
+                  matchning i rubriken ökar bevisligen dina chanser till intervju med 10,6 gånger.
+                </li>
+                <li style="font-size: 0.85rem; color: var(--color-text-mid); display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Optimerad layout:</strong> Använd en ren,
+                  enkelspaltig design för att algoritmerna ska kunna läsa din data utan teknisk friktion.
+                </li>
+              </ul>
+            </div>
+          </article>
+          <!-- Slide 2: XYZ -->
+          <article class="carousel-item">
+            <div class="carousel-img-wrap">
+              <img src="images/Prestationsbaserat Innehåll (XYZ-metodiken).png"
+                alt="Prestationsbaserat Innehåll (XYZ-metodiken)">
+              <span class="carousel-tag">Metod</span>
+            </div>
+            <div class="carousel-body">
+              <h3>2. Prestationsbaserat Innehåll (XYZ-metodiken)</h3>
+              <ul style="list-style: none; padding: 0; margin-bottom: 24px;">
+                <li
+                  style="font-size: 0.85rem; color: var(--color-text-mid); margin-bottom: 8px; display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Sälj mätbara resultat:</strong> Sluta lista
+                  passiva uppgifter – bevisa istället din affärsnytta med data i procent, kronor eller tid.
+                </li>
+                <li
+                  style="font-size: 0.85rem; color: var(--color-text-mid); margin-bottom: 8px; display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Googles framgångsformel:</strong> Använd
+                  XYZ-metoden: "Jag uppnådde X mätt med Y genom att göra Z".
+                </li>
+                <li style="font-size: 0.85rem; color: var(--color-text-mid); display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Kraftfulla aktionsverb:</strong> Signalera
+                  initiativkraft genom att byta ut "ansvarig för" mot aktiva verb som optimerade och implementerade.
+                </li>
+              </ul>
+            </div>
+          </article>
+          <!-- Slide 3: Design -->
+          <article class="carousel-item">
+            <div class="carousel-img-wrap">
+              <img src="images/Modern Design, Struktur & Gallring.png" alt="Modern Design, Struktur & Gallring">
+              <span class="carousel-tag">Design</span>
+            </div>
+            <div class="carousel-body">
+              <h3>3. Modern Design, Struktur & Gallring</h3>
+              <ul style="list-style: none; padding: 0; margin-bottom: 24px;">
+                <li
+                  style="font-size: 0.85rem; color: var(--color-text-mid); margin-bottom: 8px; display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Fånga 6-sekunders-fönstret:</strong>
+                  Designa för det digitala "F-mönstret" genom att placera dina tyngsta sökord längst till vänster.
+                </li>
+                <li
+                  style="font-size: 0.85rem; color: var(--color-text-mid); margin-bottom: 8px; display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Gallra bruset:</strong> Rensa skoningslöst
+                  bort referenser, hobbys och klyschor för att maximera ytan för dina prestationer.
+                </li>
+                <li style="font-size: 0.85rem; color: var(--color-text-mid); display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Visuell hierarki:</strong> Håll texten
+                  under 600 ord och använd generöst med vitt utrymme för en inbjudande, professionell inramning.
+                </li>
+              </ul>
+            </div>
+          </article>
+          <!-- Slide 4: Profil -->
+          <article class="carousel-item">
+            <div class="carousel-img-wrap">
+              <img src="images/Profiltext & Personligt Varumärke.png" alt="Profiltext & Personligt Varumärke">
+              <span class="carousel-tag">Branding</span>
+            </div>
+            <div class="carousel-body">
+              <h3>4. Profiltext & Personligt Varumärke</h3>
+              <ul style="list-style: none; padding: 0; margin-bottom: 24px;">
+                <li
+                  style="font-size: 0.85rem; color: var(--color-text-mid); margin-bottom: 8px; display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>3-stegs hisspitch:</strong> Fånga läsaren
+                  på fem sekunder genom att etablera vem du är, din mätbara superkraft och varför just du.
+                </li>
+                <li
+                  style="font-size: 0.85rem; color: var(--color-text-mid); margin-bottom: 8px; display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Radera AI-fluff:</strong> Klara mänskliga
+                  konversationstestet genom att byta tomma buzzwords mot unika, personliga anekdoter.
+                </li>
+                <li style="font-size: 0.85rem; color: var(--color-text-mid); display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Rätt Tone of Voice:</strong> Anpassa
+                  tonläget så att det matchar din yrkespersonlighet – från den metodiska till den drivna.
+                </li>
+              </ul>
+            </div>
+          </article>
+          <!-- Slide 5: Brev -->
+          <article class="carousel-item">
+            <div class="carousel-img-wrap">
+              <img src="images/Det Strategiska Personliga Brevet.png" alt="Det Strategiska Personliga Brevet">
+              <span class="carousel-tag">Strategi</span>
+            </div>
+            <div class="carousel-body">
+              <h3>5. Det Strategiska Personliga Brevet</h3>
+              <ul style="list-style: none; padding: 0; margin-bottom: 24px;">
+                <li
+                  style="font-size: 0.85rem; color: var(--color-text-mid); margin-bottom: 8px; display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Fokusera på framtiden:</strong> Ett
+                  strategiskt utformat brev säljer in ditt mervärde och ökar intervjuchansen med hela 3,4 gånger.
+                </li>
+                <li
+                  style="font-size: 0.85rem; color: var(--color-text-mid); margin-bottom: 8px; display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Problem-Lösning-Metoden:</strong>
+                  Identifiera företagets aktuella utmaning i annonsen och presentera din expertis som den exakta
+                  lösningen.
+                </li>
+                <li style="font-size: 0.85rem; color: var(--color-text-mid); display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Enhetligt varumärke:</strong> Synkronisera
+                  brevets layout, tonfall och nyckelord med ditt CV för ett professionellt helhetsintryck.
+                </li>
+              </ul>
+            </div>
+          </article>
+          <!-- Slide 6: Digital -->
+          <article class="carousel-item">
+            <div class="carousel-img-wrap">
+              <img src="images/Digital Närvaro & Portfolio.png" alt="Digital Närvaro & Portfolio">
+              <span class="carousel-tag">Närvaro</span>
+            </div>
+            <div class="carousel-body">
+              <h3>6. Digital Närvaro & Portfolio</h3>
+              <ul style="list-style: none; padding: 0; margin-bottom: 24px;">
+                <li
+                  style="font-size: 0.85rem; color: var(--color-text-mid); margin-bottom: 8px; display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>LinkedIn som magnet:</strong> Optimera din
+                  profilrubrik med sökord som attraherar både algoritmer och rekryterare.
+                </li>
+                <li
+                  style="font-size: 0.85rem; color: var(--color-text-mid); margin-bottom: 8px; display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>Digital beviskedja:</strong> Länka direkt
+                  till portfolios (exempelvis GitHub eller Behance) för att omedelbart bevisa din tekniska kompetens.
+                </li>
+                <li style="font-size: 0.85rem; color: var(--color-text-mid); display: flex; gap: 8px;">
+                  <span style="color: var(--color-accent);">●</span> <strong>60-sekunders Video-CV:</strong> Stick ut i
+                  moderna rekryteringssystem genom ett kort videomanus strukturerat i Krok, Bevis och Avslut.
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Nav scroll effect
+      const nav = document.getElementById('main-nav');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+      });
+
+      // Carousel Logic
+      const track = document.getElementById('carousel-track');
+      const nextBtn = document.getElementById('next-slide');
+      const prevBtn = document.getElementById('prev-slide');
+
+      let index = 0;
+      let autoSlideInterval;
+
+      function updateCarousel() {
+        if (track.children.length === 0) return;
+        const card = track.children[0];
+        const cardWidth = card.offsetWidth + 24; // width + gap
+        track.style.transform = `translateX(-${index * cardWidth}px)`;
+      }
+
+      function nextSlide() {
+        const visibleItems = Math.floor(track.parentElement.offsetWidth / (track.children[0].offsetWidth + 24));
+        if (index < track.children.length - visibleItems) {
+          index++;
+        } else {
+          index = 0; // Loop back to start
+        }
+        updateCarousel();
+      }
+
+      function prevSlide() {
+        if (index > 0) {
+          index--;
+        } else {
+          index = track.children.length - 1; // Go to end
+        }
+        updateCarousel();
+      }
+
+      function startAutoSlide() {
+        stopAutoSlide();
+        autoSlideInterval = setInterval(nextSlide, 3500); // 3.5 second interval
+      }
+
+      function stopAutoSlide() {
+        if (autoSlideInterval) clearInterval(autoSlideInterval);
+      }
+
+      nextBtn.addEventListener('click', () => {
+        nextSlide();
+        startAutoSlide(); // Reset timer on click
+      });
+
+      prevBtn.addEventListener('click', () => {
+        prevSlide();
+        startAutoSlide(); // Reset timer on click
+      });
+
+      track.addEventListener('mouseenter', stopAutoSlide);
+      track.addEventListener('mouseleave', startAutoSlide);
+
+      window.addEventListener('resize', updateCarousel);
+
+      // Initialize
+      startAutoSlide();
+
+      // Audio Player Logic
+      const audio = document.getElementById('podcast-audio');
+      const playBtn = document.getElementById('play-btn');
+      const playIcon = document.getElementById('play-icon');
+      const pauseIcon = document.getElementById('pause-icon');
+      const progressContainer = document.getElementById('progress-container');
+      const progressFill = document.getElementById('progress-fill');
+      const currentTimeEl = document.getElementById('current-time');
+      const totalTimeEl = document.getElementById('total-time');
+
+      function formatTime(seconds) {
+        if (isNaN(seconds)) return "0:00";
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60);
+        return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+      }
+
+      playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+          playIcon.style.display = 'none';
+          pauseIcon.style.display = 'block';
+        } else {
+          audio.pause();
+          playIcon.style.display = 'block';
+          pauseIcon.style.display = 'none';
+        }
+      });
+
+      audio.addEventListener('timeupdate', () => {
+        const percent = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = `${percent}%`;
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+      });
+
+      audio.addEventListener('loadedmetadata', () => {
+        totalTimeEl.textContent = formatTime(audio.duration);
+      });
+
+      progressContainer.addEventListener('click', (e) => {
+        const width = progressContainer.clientWidth;
+        const clickX = e.offsetX;
+        const duration = audio.duration;
+        audio.currentTime = (clickX / width) * duration;
+      });
+
+      // Lightbox logic
+      const lightbox = document.createElement('div');
+      lightbox.id = 'lightbox';
+      lightbox.className = 'lightbox';
+      lightbox.innerHTML = `
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+      `;
+      document.body.appendChild(lightbox);
+
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = lightbox.querySelector('.lightbox-close');
+      const items = document.querySelectorAll('.carousel-item');
+
+      items.forEach(item => {
+        const img = item.querySelector('img');
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => {
+          lightboxImg.src = img.src;
+          lightbox.classList.add('active');
+        });
+      });
+
+      lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+      closeBtn.addEventListener('click', () => lightbox.classList.remove('active'));
+
+      // Register Service Worker for PWA
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').then(reg => {
+            console.log('SW registered:', reg);
+          }).catch(err => {
+            console.log('SW registration failed:', err);
+          });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

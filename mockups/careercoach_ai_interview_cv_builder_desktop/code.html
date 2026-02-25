@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="light" lang="sv"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CareerCoach AI - Interview &amp; CV Builder</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#5842e3",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1e293b",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                    },
+                },
+            },
+        };
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-200">
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-between px-6 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-icons-outlined text-slate-600 dark:text-slate-400">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<h1 class="font-bold text-primary tracking-tight leading-none">JOBBCOACHEN</h1>
+<span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">AI-Powered Session</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors mr-2" onclick="toggleDarkMode()">
+<span class="material-icons-outlined text-slate-600 dark:text-slate-400 dark:hidden">dark_mode</span>
+<span class="material-icons-outlined text-slate-400 hidden dark:inline">light_mode</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-full text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+<span class="material-icons-outlined text-sm">visibility_off</span>
+                Dölj CV
+            </button>
+<button class="flex items-center gap-2 px-5 py-2 bg-primary text-white rounded-full text-sm font-semibold hover:opacity-90 shadow-lg shadow-primary/20 transition-all">
+<span class="material-icons-outlined text-sm">auto_awesome</span>
+                Färdigställ
+            </button>
+</div>
+</header>
+<main class="flex h-[calc(100vh-64px)] overflow-hidden">
+<section class="w-1/2 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+<div class="flex-1 overflow-y-auto p-8 space-y-8 custom-scrollbar">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="material-icons-outlined text-primary">smart_toy</span>
+</div>
+<div class="space-y-1">
+<div class="bg-white dark:bg-slate-800 p-5 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 dark:border-slate-700 max-w-lg">
+<p class="text-[15px] leading-relaxed">
+                                Hej! Vad roligt att du är här. Som din karriärcoach är jag redo att hjälpa dig bygga ditt dröm-CV för 2026. Berätta lite om din senaste roll eller vad du vill uppnå!
+                            </p>
+</div>
+<span class="text-[10px] text-slate-400 uppercase font-bold ml-1">Nu</span>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="material-icons-outlined text-primary">smart_toy</span>
+</div>
+<div class="bg-white dark:bg-slate-800 px-5 py-4 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 dark:border-slate-700 flex items-center gap-1">
+<div class="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce"></div>
+<div class="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+<div class="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+</div>
+</div>
+</div>
+<div class="p-6 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+<div class="relative max-w-3xl mx-auto flex items-center gap-3">
+<div class="relative flex-1">
+<input class="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl py-4 pl-6 pr-12 focus:ring-2 focus:ring-primary/20 text-slate-700 dark:text-slate-200 placeholder-slate-400 transition-all" placeholder="Skriv eller prata..." type="text"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined">mic</span>
+</button>
+</div>
+<button class="w-14 h-14 bg-primary text-white rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+<span class="material-icons-outlined -rotate-45 ml-1">send</span>
+</button>
+</div>
+</div>
+</section>
+<section class="w-1/2 bg-slate-50 dark:bg-slate-950 p-8 overflow-y-auto custom-scrollbar flex flex-col">
+<div class="max-w-2xl w-full mx-auto flex flex-col flex-1">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-2 text-primary font-bold tracking-wider text-xs uppercase">
+<span class="material-icons-outlined text-sm">description</span>
+                        Ditt Dokument
+                    </div>
+<div class="flex gap-1.5">
+<div class="w-2.5 h-2.5 rounded-full bg-orange-200"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-orange-300"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl shadow-slate-200/50 dark:shadow-none min-h-full p-12 relative flex flex-col border border-slate-100 dark:border-slate-800">
+<div class="space-y-10 flex-1">
+<div class="w-48 h-10 bg-slate-50 dark:bg-slate-800 rounded-lg"></div>
+<div class="space-y-4">
+<h2 class="text-3xl font-black italic text-primary"># Ditt framtida CV</h2>
+<p class="text-slate-400 italic text-lg">*Här kommer ditt CV att växa fram under vårt samtal...*</p>
+</div>
+<div class="space-y-6 pt-10">
+<div class="h-2 w-3/4 bg-slate-50 dark:bg-slate-800 rounded-full"></div>
+<div class="h-2 w-full bg-slate-50 dark:bg-slate-800 rounded-full"></div>
+<div class="h-2 w-2/3 bg-slate-50 dark:bg-slate-800 rounded-full"></div>
+</div>
+<div class="space-y-6 pt-6">
+<div class="h-2 w-1/2 bg-slate-50 dark:bg-slate-800 rounded-full"></div>
+<div class="h-2 w-5/6 bg-slate-50 dark:bg-slate-800 rounded-full"></div>
+</div>
+</div>
+<div class="mt-auto pt-10 flex justify-end">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/5 border border-primary/20 rounded-full">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="text-[10px] font-bold text-primary uppercase tracking-widest">Live Sync</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<div class="fixed bottom-6 left-6 z-[60]">
+<div class="bg-rose-500 text-white px-4 py-2 rounded-full flex items-center gap-3 shadow-xl shadow-rose-500/30 text-sm font-bold">
+<span class="w-5 h-5 bg-white text-rose-500 rounded-full flex items-center justify-center text-[10px]">N</span>
+            1 Issue
+            <button class="hover:opacity-80">
+<span class="material-icons-outlined text-sm">close</span>
+</button>
+</div>
+</div>
+
+</body></html>

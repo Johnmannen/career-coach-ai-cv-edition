@@ -1,0 +1,66 @@
+'use server';
+/**
+ * @fileOverview En ultra-stabil version av Jobbcoachen.
+ * Optimerad för att eliminera Server Action-krascher (Anslutningsfel).
+ */
+
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
+
+const ChatMessageSchema = z.object({
+  role: z.enum(['user', 'model']),
+  content: z.string(),
+});
+
+const AICareerInterviewerInputSchema = z.object({
+  message: z.string(),
+  chatHistory: z.array(ChatMessageSchema),
+});
+export type AICareerInterviewerInput = z.infer<typeof AICareerInterviewerInputSchema>;
+
+const AICareerInterviewerOutputSchema = z.object({
+  response: z.string(),
+});
+export type AICareerInterviewerOutput = z.infer<typeof AICareerInterviewerOutputSchema>;
+
+/**
+ * Server Action för att prata med Jobbcoachen.
+ * Använder en extremt enkel struktur för att undvika nätverksfel.
+ */
+export async function aiCareerInterviewer(
+  input: AICareerInterviewerInput
+): Promise<AICareerInterviewerOutput> {
+  try {
+    // Vi begränsar historiken för att undvika timeout (max 6 senaste meddelanden)
+    const limitedHistory = input.chatHistory.slice(-6);
+
+    const { text } = await ai.generate({
+      config: {
+        temperature: 0.7,
+        safetySettings: [
+          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
+        ],
+      },
+      system: `Du är Jobbcoachen, en elit-karriärcoach år 2026. 
+Ditt jobb är att intervjua användaren för att bygga ett CV i världsklass.
+Var uppmuntrande, strategisk och tålmodig med rörig talk-to-text-inmatning.
+Svara alltid på svenska.`,
+      prompt: [
+        ...limitedHistory.map(m => ({ [m.role === 'user' ? 'text' : 'text']: m.content })),
+        { text: input.message }
+      ]
+    });
+
+    return { response: text || "Jag lyssnar, berätta mer om dina mål!" };
+  } catch (error) {
+    console.error('Kritiskt fel i AI-flödet:', error);
+    // Vi returnerar ett vänligt felmeddelande istället för att krascha Server Action
+    return { 
+      response: "Hoppsan! Jag tappade anslutningen till mitt moln ett kort ögonblick. Kan du upprepa det du sa?" 
+    };
+  }
+}

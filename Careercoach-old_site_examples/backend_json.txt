@@ -1,0 +1,792 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents an individual user account in the CareerCoach AI application, linked to an external authentication system. This entity primarily serves to link all user-specific data.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the User entity. (Primary Key)"
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address, often used for communication and identification, obtained from the authentication system.",
+          "format": "email"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the user account was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the user account was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "UserProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Stores detailed personal information, contact details, and a professional summary for a user, forming the foundation for CV and cover letter generation.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UserProfile entity. (Primary Key)"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User this profile belongs to. (Relationship: User 1:1 UserProfile)"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "The user's first name."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The user's last name."
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "The user's contact phone number."
+        },
+        "address": {
+          "type": "string",
+          "description": "The user's street address."
+        },
+        "city": {
+          "type": "string",
+          "description": "The city where the user resides."
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "The user's postal code."
+        },
+        "country": {
+          "type": "string",
+          "description": "The user's country of residence."
+        },
+        "linkedinProfileUrl": {
+          "type": "string",
+          "description": "URL to the user's LinkedIn profile.",
+          "format": "uri"
+        },
+        "portfolioUrl": {
+          "type": "string",
+          "description": "URL to the user's online portfolio or personal website.",
+          "format": "uri"
+        },
+        "summary": {
+          "type": "string",
+          "description": "A concise professional summary or career objective for the user, often used at the beginning of a CV."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the user profile was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the user profile was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "firstName",
+        "lastName",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "WorkExperience": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "WorkExperience",
+      "type": "object",
+      "description": "Records a single professional work experience entry for a user, detailing a past or current job role.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the WorkExperience entity. (Primary Key)"
+        },
+        "userProfileId": {
+          "type": "string",
+          "description": "Reference to the UserProfile this work experience belongs to. (Relationship: UserProfile 1:N WorkExperience)"
+        },
+        "jobTitle": {
+          "type": "string",
+          "description": "The title of the job held (e.g., 'Software Engineer', 'Marketing Manager')."
+        },
+        "companyName": {
+          "type": "string",
+          "description": "The name of the company where the job was held."
+        },
+        "location": {
+          "type": "string",
+          "description": "The physical location of the company or job."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of employment.",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date of employment. This field will be null if 'isCurrent' is true.",
+          "format": "date"
+        },
+        "isCurrent": {
+          "type": "boolean",
+          "description": "A boolean indicating if this is the user's current employment."
+        },
+        "description": {
+          "type": "string",
+          "description": "A detailed description of key responsibilities, duties, and achievements in this role."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the work experience entry was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the work experience entry was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userProfileId",
+        "jobTitle",
+        "companyName",
+        "startDate",
+        "isCurrent",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Education": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Education",
+      "type": "object",
+      "description": "Records a single educational attainment entry for a user, including degrees, institutions, and study periods.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Education entity. (Primary Key)"
+        },
+        "userProfileId": {
+          "type": "string",
+          "description": "Reference to the UserProfile this education entry belongs to. (Relationship: UserProfile 1:N Education)"
+        },
+        "degree": {
+          "type": "string",
+          "description": "The degree or qualification obtained (e.g., 'Master of Science', 'Bachelor of Arts', 'High School Diploma')."
+        },
+        "fieldOfStudy": {
+          "type": "string",
+          "description": "The specific field or major of study (e.g., 'Computer Science', 'Business Administration')."
+        },
+        "institutionName": {
+          "type": "string",
+          "description": "The name of the educational institution."
+        },
+        "location": {
+          "type": "string",
+          "description": "The location of the educational institution."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of the education period.",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date of the education period. This field will be null if 'isCurrent' is true.",
+          "format": "date"
+        },
+        "isCurrent": {
+          "type": "boolean",
+          "description": "A boolean indicating if the user is currently studying at this institution."
+        },
+        "description": {
+          "type": "string",
+          "description": "Relevant coursework, thesis titles, extracurricular activities, or achievements during this education."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the education entry was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the education entry was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userProfileId",
+        "degree",
+        "fieldOfStudy",
+        "institutionName",
+        "startDate",
+        "isCurrent",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Skill": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Skill",
+      "type": "object",
+      "description": "Represents a specific skill possessed by a user, which can be categorized and optionally include a proficiency level.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Skill entity. (Primary Key)"
+        },
+        "userProfileId": {
+          "type": "string",
+          "description": "Reference to the UserProfile this skill belongs to. (Relationship: UserProfile 1:N Skill)"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the skill (e.g., 'Python Programming', 'Project Management', 'Public Speaking')."
+        },
+        "proficiencyLevel": {
+          "type": "string",
+          "description": "The user's self-assessed proficiency level for the skill (e.g., 'Beginner', 'Intermediate', 'Advanced', 'Expert')."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the skill entry was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the skill entry was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userProfileId",
+        "name",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ProjectOrAchievement": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ProjectOrAchievement",
+      "type": "object",
+      "description": "Records significant projects, publications, awards, certifications, or other noteworthy achievements by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the ProjectOrAchievement entity. (Primary Key)"
+        },
+        "userProfileId": {
+          "type": "string",
+          "description": "Reference to the UserProfile this project or achievement belongs to. (Relationship: UserProfile 1:N ProjectOrAchievement)"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the project, award, publication, or achievement."
+        },
+        "description": {
+          "type": "string",
+          "description": "A detailed description of the project or achievement, including contributions, technologies used, and outcomes."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of the project or period of achievement.",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date of the project or period of achievement. This field can be null if the project is ongoing.",
+          "format": "date"
+        },
+        "projectUrl": {
+          "type": "string",
+          "description": "URL to the project repository, live demo, publication, or relevant external link.",
+          "format": "uri"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the project or achievement entry was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the project or achievement entry was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userProfileId",
+        "title",
+        "description",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CV": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CV",
+      "type": "object",
+      "description": "Stores a generated or user-edited Curriculum Vitae (CV) document, allowing for review, refinement, and download.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the CV entity. (Primary Key)"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User who owns this CV. (Relationship: User 1:N CV)"
+        },
+        "title": {
+          "type": "string",
+          "description": "A user-friendly title for the CV (e.g., 'Software Engineer CV for Google', 'General Application CV')."
+        },
+        "generatedContent": {
+          "type": "string",
+          "description": "The actual content of the CV, potentially stored in a structured format like Markdown, HTML, or raw text, generated by the AI."
+        },
+        "version": {
+          "type": "number",
+          "description": "The version number of the CV, incremented upon significant updates or edits."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the CV was first created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the CV was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "title",
+        "generatedContent",
+        "version",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CoverLetter": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CoverLetter",
+      "type": "object",
+      "description": "Stores a generated or user-edited cover letter document, tailored for a specific job application and company.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the CoverLetter entity. (Primary Key)"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User who owns this Cover Letter. (Relationship: User 1:N CoverLetter)"
+        },
+        "cvId": {
+          "type": "string",
+          "description": "Optional reference to the CV this cover letter accompanies. (Relationship: CV 1:N CoverLetter)"
+        },
+        "jobTitleTarget": {
+          "type": "string",
+          "description": "The specific job title for which the cover letter was written."
+        },
+        "companyNameTarget": {
+          "type": "string",
+          "description": "The name of the company to which the cover letter is addressed."
+        },
+        "jobDescription": {
+          "type": "string",
+          "description": "The full text of the job description used to tailor the cover letter, allowing for AI contextualization and user review."
+        },
+        "generatedContent": {
+          "type": "string",
+          "description": "The actual content of the cover letter, potentially in a structured format like Markdown, HTML, or raw text, generated by the AI."
+        },
+        "version": {
+          "type": "number",
+          "description": "The version number of the cover letter, incremented upon significant updates or edits."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the cover letter was first created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the cover letter was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "jobTitleTarget",
+        "companyNameTarget",
+        "generatedContent",
+        "version",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "InterviewSession": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "InterviewSession",
+      "type": "object",
+      "description": "Tracks an interactive AI interview session conducted with a user, used to gather comprehensive information for CVs and cover letters.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the InterviewSession entity. (Primary Key)"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User who participated in this session. (Relationship: User 1:N InterviewSession)"
+        },
+        "title": {
+          "type": "string",
+          "description": "A descriptive title for the interview session (e.g., 'CV Data Gathering - Software Engineer', 'Practice Interview')."
+        },
+        "startTime": {
+          "type": "string",
+          "description": "The start timestamp of the interview session.",
+          "format": "date-time"
+        },
+        "endTime": {
+          "type": "string",
+          "description": "The end timestamp of the interview session. Can be null if the session is ongoing.",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "description": "The current status of the interview session (e.g., 'started', 'completed', 'aborted', 'paused')."
+        },
+        "summary": {
+          "type": "string",
+          "description": "An AI-generated summary or key takeaways from the entire interview session, highlighting important information captured."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the interview session record was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the interview session record was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "title",
+        "startTime",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "InterviewExchange": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "InterviewExchange",
+      "type": "object",
+      "description": "Records a single question-and-answer exchange between the AI agent and the user within an InterviewSession.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the InterviewExchange entity. (Primary Key)"
+        },
+        "interviewSessionId": {
+          "type": "string",
+          "description": "Reference to the InterviewSession this exchange belongs to. (Relationship: InterviewSession 1:N InterviewExchange)"
+        },
+        "sequenceNumber": {
+          "type": "number",
+          "description": "The sequential order of this exchange within its parent interview session, useful for reconstructing the conversation flow."
+        },
+        "agentMessage": {
+          "type": "string",
+          "description": "The prompt or question posed by the AI agent during the interview."
+        },
+        "userResponse": {
+          "type": "string",
+          "description": "The user's response or answer to the AI agent's message."
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "The timestamp indicating when this specific exchange (agent message and user response) occurred.",
+          "format": "date-time"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the interview exchange record was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the interview exchange record was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "interviewSessionId",
+        "sequenceNumber",
+        "agentMessage",
+        "userResponse",
+        "timestamp",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores core user account information. The document ID (`userId`) must match Firebase Authentication's UID. Access is restricted to the owning user.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, corresponding to Firebase Authentication UID."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/userProfile/{userProfileId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Stores detailed personal and professional profile information for a user. The `userProfileId` document ID must be identical to the `userId`. Includes denormalized 'userId' field for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, corresponding to Firebase Authentication UID."
+            },
+            {
+              "name": "userProfileId",
+              "description": "The unique identifier for the user's profile, which should be the same as the userId."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/userProfile/{userProfileId}/workExperiences/{workExperienceId}",
+        "definition": {
+          "entityName": "WorkExperience",
+          "schema": {
+            "$ref": "#/backend/entities/WorkExperience"
+          },
+          "description": "Stores individual work experience entries for a user's profile. Includes denormalized 'userId' and 'userProfileId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, corresponding to Firebase Authentication UID."
+            },
+            {
+              "name": "userProfileId",
+              "description": "The unique identifier for the user's profile, which should be the same as the userId."
+            },
+            {
+              "name": "workExperienceId",
+              "description": "The unique identifier for a specific work experience entry."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/userProfile/{userProfileId}/educations/{educationId}",
+        "definition": {
+          "entityName": "Education",
+          "schema": {
+            "$ref": "#/backend/entities/Education"
+          },
+          "description": "Stores individual education entries for a user's profile. Includes denormalized 'userId' and 'userProfileId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, corresponding to Firebase Authentication UID."
+            },
+            {
+              "name": "userProfileId",
+              "description": "The unique identifier for the user's profile, which should be the same as the userId."
+            },
+            {
+              "name": "educationId",
+              "description": "The unique identifier for a specific education entry."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/userProfile/{userProfileId}/skills/{skillId}",
+        "definition": {
+          "entityName": "Skill",
+          "schema": {
+            "$ref": "#/backend/entities/Skill"
+          },
+          "description": "Stores individual skill entries for a user's profile. Includes denormalized 'userId' and 'userProfileId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, corresponding to Firebase Authentication UID."
+            },
+            {
+              "name": "userProfileId",
+              "description": "The unique identifier for the user's profile, which should be the same as the userId."
+            },
+            {
+              "name": "skillId",
+              "description": "The unique identifier for a specific skill entry."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/userProfile/{userProfileId}/projectsAndAchievements/{projectOrAchievementId}",
+        "definition": {
+          "entityName": "ProjectOrAchievement",
+          "schema": {
+            "$ref": "#/backend/entities/ProjectOrAchievement"
+          },
+          "description": "Stores individual project or achievement entries for a user's profile. Includes denormalized 'userId' and 'userProfileId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, corresponding to Firebase Authentication UID."
+            },
+            {
+              "name": "userProfileId",
+              "description": "The unique identifier for the user's profile, which should be the same as the userId."
+            },
+            {
+              "name": "projectOrAchievementId",
+              "description": "The unique identifier for a specific project or achievement entry."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/cvs/{cvId}",
+        "definition": {
+          "entityName": "CV",
+          "schema": {
+            "$ref": "#/backend/entities/CV"
+          },
+          "description": "Stores generated or user-edited CV documents. Includes denormalized 'userId' field for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, corresponding to Firebase Authentication UID."
+            },
+            {
+              "name": "cvId",
+              "description": "The unique identifier for a specific CV document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/coverLetters/{coverLetterId}",
+        "definition": {
+          "entityName": "CoverLetter",
+          "schema": {
+            "$ref": "#/backend/entities/CoverLetter"
+          },
+          "description": "Stores generated or user-edited cover letter documents. Includes denormalized 'userId' field for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, corresponding to Firebase Authentication UID."
+            },
+            {
+              "name": "coverLetterId",
+              "description": "The unique identifier for a specific cover letter document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/interviewSessions/{interviewSessionId}",
+        "definition": {
+          "entityName": "InterviewSession",
+          "schema": {
+            "$ref": "#/backend/entities/InterviewSession"
+          },
+          "description": "Tracks an interactive AI interview session with a user. Includes denormalized 'userId' field for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, corresponding to Firebase Authentication UID."
+            },
+            {
+              "name": "interviewSessionId",
+              "description": "The unique identifier for a specific interview session."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/interviewSessions/{interviewSessionId}/exchanges/{exchangeId}",
+        "definition": {
+          "entityName": "InterviewExchange",
+          "schema": {
+            "$ref": "#/backend/entities/InterviewExchange"
+          },
+          "description": "Records individual question-and-answer exchanges within an InterviewSession. Includes denormalized 'userId' and 'interviewSessionId' fields for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, corresponding to Firebase Authentication UID."
+            },
+            {
+              "name": "interviewSessionId",
+              "description": "The unique identifier for the parent interview session."
+            },
+            {
+              "name": "exchangeId",
+              "description": "The unique identifier for a specific interview exchange."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The recommended Firestore structure prioritizes strict user data segregation and authorization independence to achieve robust security and simplified rules. All user-specific data is organized hierarchically under a `/users/{userId}` root, where `{userId}` directly corresponds to the authenticated user's UID (`request.auth.uid`).\n\n**Authorization Independence:** This structure is designed to be fully authorization-independent. Every document that requires user-specific access will either have its `userId` (or `userProfileId`, which implicitly maps to the `userId`) explicitly stored as a field within the document itself, or its path will directly contain the `userId` as a wildcard (e.g., `/users/{userId}/cvs/{cvId}`). This eliminates the need for `get()` operations in security rules to check parent documents for ownership or membership information. For instance, an `InterviewExchange` document stored at `/users/{userId}/interviewSessions/{interviewSessionId}/exchanges/{exchangeId}` will also contain `userId` and `interviewSessionId` fields, allowing rules to directly verify `request.auth.uid == resource.data.userId` and `resource.data.interviewSessionId == interviewSessionId` without cross-document reads. This enables atomic writes and transactions without breaking security.\n\n**QAPs (Rules are not Filters):** The hierarchical path design inherently supports Query-As-Permissions (QAPs). When a user queries a collection like `/users/{userId}/cvs`, the Firestore security rules can directly evaluate `allow read: if request.auth.uid == userId;` (where `userId` is the wildcard in the path). This ensures that any `list` operation performed by an authenticated user will only return documents belonging to that user, as specified by the path. No data for other users is ever returned, making the queries inherently secure without requiring complex filtering logic within the rules or client-side application.\n\n**Structural Segregation:** All data stored within a user's branch (`/users/{userId}/...`) is considered private to that user, ensuring a homogeneous security posture. There are no mixed-access collections (e.g., public and private documents in the same place), which keeps security rules simple and clear. Each document type (e.g., `WorkExperience`, `Education`) resides in its dedicated subcollection, ensuring all documents within that collection share the same access requirements relative to the owning user.\n\n**Key Denormalization for Authorization:**\n*   `UserProfile`, while a 1:1 relationship with `User`, will be stored as a document with the ID `{userId}` within `/users/{userId}/userProfile`. Its internal `userId` field will also match.\n*   Entities like `WorkExperience`, `Education`, `Skill`, and `ProjectOrAchievement` are subcollections of `UserProfile`. Their documents will explicitly contain `userId` and `userProfileId` fields, where `userProfileId` is the `userId` of the owner.\n*   `CV`, `CoverLetter`, and `InterviewSession` documents will all contain a `userId` field matching the parent `userId` in the path.\n*   `InterviewExchange` documents will contain both `userId` and `interviewSessionId` fields.\n\nThis rigorous adherence to denormalization for authorization attributes ensures that every document can be independently authorized, making the security rules straightforward, efficient, and easily debuggable, directly addressing the user's need for 'inloggningssäkerhet'."
+  }
+}

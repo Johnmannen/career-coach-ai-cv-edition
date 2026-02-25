@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="light" lang="sv"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CareerCoach AI - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#4F46E5",
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0F172A",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen pb-24">
+<header class="sticky top-0 z-40 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-md mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">C</div>
+<span class="font-bold text-slate-800 dark:text-white text-lg">CareerCoach AI</span>
+</div>
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-icons-outlined text-slate-500">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-md mx-auto px-6 pt-8 space-y-8">
+<section class="space-y-2">
+<h1 class="text-3xl font-extrabold text-slate-900 dark:text-white">Välkommen tillbaka, Ny!</h1>
+<p class="text-slate-500 dark:text-slate-400">Din karriärresa ser ljus ut. Vad vill du göra idag?</p>
+</section>
+<button class="w-full bg-primary hover:bg-indigo-700 text-white py-4 px-6 rounded-2xl flex items-center justify-center gap-3 font-semibold shadow-lg shadow-primary/25 transition-all active:scale-95">
+<span class="material-icons-outlined">add</span>
+            Ny Intervju
+        </button>
+<section class="grid grid-cols-1 gap-4">
+<div class="glass-card p-5 rounded-2xl shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2 text-amber-500">
+<span class="material-icons-outlined text-sm">stars</span>
+<span class="text-xs font-bold uppercase tracking-wider">Profilstyrka</span>
+</div>
+</div>
+<div class="flex items-baseline gap-1 mb-3">
+<span class="text-4xl font-extrabold text-slate-900 dark:text-white">85%</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden mb-3">
+<div class="bg-primary h-full rounded-full" style="width: 85%"></div>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Lägg till "Utbildning" för att nå 100%.</p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="glass-card p-5 rounded-2xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-icons-outlined text-sm">description</span>
+<span class="text-xs font-bold uppercase tracking-wider">Dokument</span>
+</div>
+<div class="my-4">
+<span class="text-4xl font-extrabold text-slate-900 dark:text-white">0</span>
+</div>
+<p class="text-[10px] leading-tight text-slate-500 dark:text-slate-400">Aktiva CV:n och personliga brev i molnet.</p>
+</div>
+<div class="glass-card p-5 rounded-2xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center gap-2 text-emerald-500">
+<span class="material-icons-outlined text-sm">trending_up</span>
+<span class="text-xs font-bold uppercase tracking-wider">Insikt</span>
+</div>
+<p class="text-xs text-slate-700 dark:text-slate-300 mt-2 font-medium">
+                        "ATS-optimering" är din främsta styrka just nu.
+                    </p>
+</div>
+</div>
+</section>
+<section class="space-y-4">
+<h2 class="text-xl font-bold text-slate-800 dark:text-white">Senaste Dokument</h2>
+<div class="border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl p-8 flex flex-col items-center justify-center text-center space-y-3">
+<div class="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center">
+<span class="material-icons-outlined text-slate-400">folder_open</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 italic">Inga dokument skapade än. Starta en intervju för att börja!</p>
+</div>
+</section>
+<section class="space-y-4">
+<h2 class="text-xl font-bold text-slate-800 dark:text-white">Snabblänkar</h2>
+<div class="space-y-3">
+<button class="w-full flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-primary transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-primary">
+<span class="material-icons-outlined">forum</span>
+</div>
+<span class="font-semibold text-slate-700 dark:text-slate-200">Träna på intervju</span>
+</div>
+<span class="material-icons-outlined text-slate-400">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-primary transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-primary">
+<span class="material-icons-outlined">folder</span>
+</div>
+<span class="font-semibold text-slate-700 dark:text-slate-200">Mina dokument</span>
+</div>
+<span class="material-icons-outlined text-slate-400">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-primary transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-primary">
+<span class="material-icons-outlined">person</span>
+</div>
+<span class="font-semibold text-slate-700 dark:text-slate-200">Uppdatera profil</span>
+</div>
+<span class="material-icons-outlined text-slate-400">chevron_right</span>
+</button>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 pb-8 pt-2 px-6 z-50">
+<div class="max-w-md mx-auto flex justify-between items-center">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-icons-outlined">home</span>
+<span class="text-[10px] font-bold">Hem</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-outlined">chat_bubble_outline</span>
+<span class="text-[10px] font-medium">Chat</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-outlined">archive</span>
+<span class="text-[10px] font-medium">Arkiv</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-outlined">account_circle</span>
+<span class="text-[10px] font-medium">Profil</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-outlined">admin_panel_settings</span>
+<span class="text-[10px] font-medium">Admin</span>
+</button>
+</div>
+</nav>
+<div class="fixed bottom-24 left-6 z-50">
+<div class="bg-red-500 text-white px-3 py-1.5 rounded-full flex items-center gap-2 shadow-lg text-xs font-bold animate-pulse">
+<span class="w-2 h-2 bg-white rounded-full"></span>
+            1 Issue
+            <span class="material-icons-outlined text-[14px]">close</span>
+</div>
+</div>
+
+</body></html>

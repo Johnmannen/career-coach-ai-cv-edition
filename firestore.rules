@@ -1,0 +1,28 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Autentiserade användare ────────────────
+    // Varje användare kan bara läsa/skriva sina egna sessioner.
+    match /users/{userId}/sessions/{sessionId} {
+      allow read, write: if request.auth != null
+                         && request.auth.uid == userId;
+    }
+
+    // ─── Gästsessioner (utan inloggning) ────────
+    // Tillåt create (ny session) och update (spara framsteg).
+    // Ingen delete — vi vill inte att gäster raderar data.
+    match /interviews/{sessionId} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if true;
+      allow delete: if false;
+    }
+
+    // ─── Allt annat — stängt ────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

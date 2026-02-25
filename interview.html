@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerCoach AI — Jobbcoachen</title>
+  <meta name="description" content="Prata med Jobbcoachen och bygg ditt CV i realtid.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4C3399">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self';
+      script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com https://www.googleapis.com https://generativelanguage.googleapis.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com;
+      connect-src 'self' https://generativelanguage.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com;
+      img-src 'self' data: https:;
+      frame-src https://accounts.google.com https://*.firebaseapp.com;">
+  <link rel="apple-touch-icon" href="images/icon-192.png">
+</head>
+
+<body class="app-body">
+  <!-- Login Gate (Full Screen Overlay) -->
+  <div id="login-gate" class="login-gate">
+    <div class="login-gate-content">
+      <div class="brand-logo-large">
+        <div class="brand-dot-large">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" />
+          </svg>
+        </div>
+        <h1>CareerCoach AI</h1>
+      </div>
+      <p class="login-gate-subtitle">Din intelligenta partner för ett exceptionellt CV.</p>
+      <div class="login-gate-card">
+        <h2 id="gate-title">Välkommen tillbaka</h2>
+        <p id="gate-desc">Logga in med ditt Google-konto eller e-post för att fortsätta din intervju.</p>
+
+        <button id="gate-login-btn" class="btn-primary-v2"
+          style="width: 100%; justify-content: center; margin-top: 16px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
+            <path
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+              fill="#34A853" />
+            <path
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.16H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.84l3.66-2.75z"
+              fill="#FBBC05" />
+            <path
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.16l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+              fill="#EA4335" />
+          </svg>
+          Fortsätt med Google
+        </button>
+
+        <div class="login-divider">
+          <span>eller</span>
+          <hr>
+        </div>
+
+        <form id="email-auth-form" style="display: flex; flex-direction: column; gap: 12px;">
+          <input type="email" id="auth-email" placeholder="E-postadress" required class="input-field-v2">
+          <input type="password" id="auth-password" placeholder="Lösenord" required class="input-field-v2"
+            minlength="6">
+          <button type="submit" id="auth-submit-btn" class="btn-primary-v2"
+            style="width: 100%; justify-content: center;">
+            Logga in
+          </button>
+        </form>
+
+        <button id="toggle-auth-mode" class="toggle-auth-link">
+          Inget konto? Registrera dig här
+        </button>
+      </div>
+      <div class="login-gate-footer">
+        Din data är säker hos oss och raderas automatiskt efter 30 dagars inaktivitet.
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────────────────────────────────────
+       TOP BAR
+       ─────────────────────────────────────────────────────── -->
+  <header class="top-bar" role="banner">
+    <a href="index.html" class="top-bar-brand" aria-label="CareerCoach AI startsida">
+      <div class="brand-dot" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" />
+        </svg>
+      </div>
+      CareerCoach AI
+    </a>
+
+    <div class="top-bar-status" aria-live="polite">
+      <div class="status-dot" aria-hidden="true"></div>
+      <span>Jobbcoachen är aktiv</span>
+    </div>
+
+    <div class="top-bar-actions">
+      <!-- Print / Download CV -->
+      <button class="btn-icon" id="print-btn" title="Spara CV som PDF" aria-label="Skriv ut eller spara CV">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a1 1 0 001 1h8a1 1 0 001-1v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a1 1 0 00-1-1H6a1 1 0 00-1 1zm2 0h6v3H7V4zm-1 9h8v3H6v-3z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+      <!-- Share Session -->
+      <button class="btn-icon" id="share-session-btn" title="Dela eller spara länk till denna session"
+        aria-label="Dela session">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M15.75 4.5a3 3 0 11.825 2.066l-8.421 4.679a3.002 3.002 0 010 1.51l8.421 4.679a3 3 0 11-.729 1.31l-8.421-4.678a3 3 0 110-4.132l8.421-4.679a3 3 0 01-.1-.735z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+
+      <!-- Export Session to File -->
+      <button class="btn-icon" id="export-session-btn" title="Spara session som fil (.json)"
+        aria-label="Exportera session">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+
+      <!-- Import Session from File -->
+      <button class="btn-icon" id="import-session-btn" title="Ladda session från fil (.json)"
+        aria-label="Importera session">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M11.47 2.47a.75.75 0 011.06 0l4.5 4.5a.75.75 0 01-1.06 1.06l-3.22-3.22V16.5a.75.75 0 01-1.5 0V4.81L8.03 8.03a.75.75 0 01-1.06-1.06l4.5-4.5zM3 15.75a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+      <input type="file" id="import-session-input" accept=".json" hidden aria-hidden="true">
+
+      <!-- New Session -->
+      <button class="btn-icon" id="new-session-btn" title="Starta ny session" aria-label="Starta ny session">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311h2.433a.75.75 0 000-1.5H3.989a.75.75 0 00-.75.75v4.242a.75.75 0 001.5 0v-2.43l.31.31a7 7 0 0011.712-3.138.75.75 0 00-1.449-.389zm1.23-3.723a.75.75 0 00.219-.53V2.929a.75.75 0 00-1.5 0V5.36l-.31-.31A7 7 0 003.239 8.188a.75.75 0 101.448.389A5.5 5.5 0 0113.89 6.11l.311.31h-2.432a.75.75 0 000 1.5h4.243a.75.75 0 00.53-.219z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ───────────────────────────────────────────────────────
+       MAIN SPLIT LAYOUT
+       ─────────────────────────────────────────────────────── -->
+  <main class="main-split" role="main">
+
+    <!-- ═══════════════════════════════════════════════════
+         LEFT: CHAT PANEL
+         ═══════════════════════════════════════════════════ -->
+    <section class="chat-panel" aria-label="Jobbcoachen — chattintervju">
+
+      <!-- Chat header -->
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <h2>Jobbcoachen</h2>
+          <p>Intervjun pågår — vi tar det i din takt</p>
+        </div>
+        <button id="tts-toggle" class="btn-tts-toggle" title="Läs upp AI-svar" aria-label="Aktivera text-till-tal">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+            <path
+              d="M10.5 3.75a.75.75 0 00-1.264-.546L5.203 7H2.667a.75.75 0 00-.7.48A6.985 6.985 0 001.5 10c0 .887.165 1.737.468 2.52.111.29.39.48.7.48h2.535l4.033 3.796A.75.75 0 0010.5 16.25V3.75zM13.38 5.076a.75.75 0 011.06-.044 6.5 6.5 0 010 9.936.75.75 0 01-1.017-1.103 5 5 0 000-7.646.75.75 0 01-.044-1.06z" />
+          </svg>
+          <span>Uppläsning</span>
+        </button>
+      </div>
+
+      <!-- Messages -->
+      <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-label="Konversation">
+        <!-- Meddelanden injiceras av chat.js -->
+      </div>
+
+      <!-- Typing indicator -->
+      <div class="typing-indicator" id="typing-indicator" aria-label="Jobbcoachen skriver..." role="status">
+        <div class="typing-bubble">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+
+      <!-- Input area -->
+      <div class="chat-input-area">
+        <div class="chat-input-wrap">
+          <!-- Media upload button -->
+          <button id="media-btn" class="btn-input-action" title="Bifoga fil (bild/PDF)" aria-label="Bifoga fil">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+              <path fill-rule="evenodd"
+                d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
+                clip-rule="evenodd" />
+            </svg>
+          </button>
+          <input type="file" id="media-input" accept="image/png,image/jpeg,image/webp,application/pdf" hidden
+            aria-hidden="true">
+
+          <!-- Mic button (STT) -->
+          <button id="mic-btn" class="btn-input-action" title="Tala istället för att skriva" aria-label="Mikrofon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+              <path d="M7 4a3 3 0 016 0v6a3 3 0 11-6 0V4z" />
+              <path
+                d="M5.5 9.643a.75.75 0 00-1.5 0V10c0 3.06 2.29 5.585 5.25 5.954V17.5h-1.5a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-1.5v-1.546A6.001 6.001 0 0016 10v-.357a.75.75 0 00-1.5 0V10a4.5 4.5 0 01-9 0v-.357z" />
+            </svg>
+          </button>
+
+          <textarea id="chat-input" placeholder="Skriv ditt svar här..." rows="1"
+            aria-label="Skriv ditt svar till Jobbcoachen" autocomplete="off" spellcheck="true"></textarea>
+          <button id="send-btn" aria-label="Skicka meddelande" title="Skicka (Enter)">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                d="M3.105 2.289a.75.75 0 00-.826.95l1.414 4.925A1.5 1.5 0 005.135 9.25h6.115a.75.75 0 010 1.5H5.135a1.5 1.5 0 00-1.442 1.086l-1.414 4.926a.75.75 0 00.826.95 28.896 28.896 0 0015.293-7.154.75.75 0 000-1.115A28.897 28.897 0 003.105 2.289z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GDPR & Integritet -->
+    <div class="privacy-footer">
+      <button class="btn-text" onclick="togglePrivacyInfo()">Integritet & GDPR</button>
+    </div>
+
+    <div id="privacy-info" class="privacy-info-modal hidden">
+      <div class="privacy-content">
+        <h3>Integritet & GDPR</h3>
+        <p><strong>Vilka data sparar vi?</strong> Din e-post (om du loggar in), din chatthistorik och de uppgifter du
+          lägger in i ditt CV.</p>
+        <p><strong>Varför?</strong> För att Jobbcoachen ska kunna ge personlig rådgivning och för att du ska kunna
+          fortsätta ditt arbete senare.</p>
+        <p><strong>Säkerhet:</strong> Datan lagras säkert i Google Firebase. Ingen extern part har tillgång till dina
+          konversationer.</p>
+        <p><strong>Lagringstid:</strong> Dina uppgifter rensas automatiskt efter <strong>30 dagars inaktivitet</strong>.
+          Du får en påminnelse via e-post efter 25 dagar.</p>
+        <p><strong>Dina rättigheter:</strong> Du kan när som helst begära att dina data raderas genom att använda "Rensa
+          session"-knappen.</p>
+        <button class="btn btn-secondary" onclick="togglePrivacyInfo()">Stäng</button>
+      </div>
+    </div>
+
+    <style>
+      .privacy-footer {
+        padding: 10px;
+        text-align: center;
+        border-top: 1px solid var(--color-border);
+        background: var(--color-bg-secondary);
+      }
+
+      .btn-text {
+        background: none;
+        border: none;
+        color: var(--color-text-muted);
+        font-size: 12px;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      .privacy-info-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        padding: 20px;
+      }
+
+      .privacy-content {
+        background: var(--color-bg-primary);
+        padding: 24px;
+        border-radius: 12px;
+        max-width: 500px;
+        border: 1px solid var(--color-border);
+      }
+    </style>
+
+    <!-- ═══════════════════════════════════════════════════
+         RIGHT: CANVAS PANEL
+         ═══════════════════════════════════════════════════ -->
+    <section class="canvas-panel" aria-label="Ditt CV — uppdateras i realtid">
+
+      <!-- Canvas header -->
+      <div class="canvas-header">
+        <div class="canvas-header-left">
+          <div class="canvas-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div>
+            <h2>Ditt Dokument</h2>
+            <p>Uppdateras i realtid under intervjun</p>
+          </div>
+        </div>
+        <div class="canvas-header-actions">
+          <button class="btn-icon" id="download-txt-btn" title="Ladda ner som TXT" aria-label="Spara CV som TXT">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </button>
+          <button class="btn-icon" id="print-btn-2" title="Spara som PDF" aria-label="Spara CV som PDF">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 2a.75.75 0 01.75.75v7.44l1.97-1.97a.75.75 0 111.06 1.06l-3.25 3.25a.75.75 0 01-1.06 0L6.22 9.28a.75.75 0 011.06-1.06l1.97 1.97V2.75A.75.75 0 0110 2zM5.273 4.5a1.25 1.25 0 00-1.205.918l-1.523 5.52c-.006.02-.01.041-.015.062H6a1 1 0 01.894.553l.448.894a1 1 0 00.894.553h3.438a1 1 0 00.86-.49l.606-1.02A1 1 0 0114 11h3.47a1.318 1.318 0 00-.015-.062l-1.523-5.52a1.25 1.25 0 00-1.205-.918h-.977a.75.75 0 010-1.5h.977a2.75 2.75 0 012.651 2.019l1.523 5.52c.066.239.099.485.099.732V15a2 2 0 01-2 2H4a2 2 0 01-2-2v-2.709c0-.247.033-.493.099-.732l1.523-5.52A2.75 2.75 0 016.273 3h.977a.75.75 0 010 1.5h-.977z"
+                clip-rule="evenodd" />
+            </svg>
+          </button>
+
+          <div class="auth-section" id="auth-section">
+            <button class="btn btn-primary btn-sm" id="login-btn">Logga in</button>
+            <div id="user-info" class="user-info hidden">
+              <img id="user-avatar" src="" alt="" class="user-avatar">
+              <button class="btn btn-secondary btn-sm" id="logout-btn" title="Logga ut">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Canvas tabs -->
+      <div class="canvas-tabs" id="canvas-tabs">
+        <button class="tab-btn active" data-view="cv">Ditt CV</button>
+        <button class="tab-btn" data-view="cover-letter">Personligt brev</button>
+      </div>
+
+      <!-- Progress bar (completeness indicator) -->
+      <div class="canvas-progress-bar" role="progressbar" aria-label="CV-kompletteringsgrad" aria-valuenow="0"
+        aria-valuemin="0" aria-valuemax="100">
+        <div class="canvas-progress-fill" id="canvas-progress-fill"></div>
+      </div>
+
+      <!-- CV Document scroll area -->
+      <div class="canvas-scroll">
+        <div class="cv-document" id="cv-document">
+
+          <!-- CV Header Block (Name / Title / Contact) -->
+          <div class="cv-header-block">
+            <div id="cv-name" style="opacity:0.45">Ditt Namn</div>
+            <div id="cv-title" style="opacity:0.45">Din Yrkestitel</div>
+            <div class="cv-contact-row" id="cv-contact-row">
+              <!-- Kontaktuppgifter injiceras av canvas.js -->
+            </div>
+          </div>
+
+          <!-- CV Body -->
+          <div class="cv-body">
+
+            <!-- Sammanfattning -->
+            <div class="cv-section" id="section-summary">
+              <div class="cv-section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                  <path fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z"
+                    clip-rule="evenodd" />
+                </svg>
+                Profil
+              </div>
+              <div id="cv-summary-content">
+                <p class="cv-empty-hint">Din professionella sammanfattning dyker upp här när vi kommit igång...</p>
+              </div>
+            </div>
+
+            <!-- Arbetslivserfarenhet -->
+            <div class="cv-section" id="section-experience">
+              <div class="cv-section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                  <path fill-rule="evenodd"
+                    d="M6 3.75A2.75 2.75 0 018.75 1h2.5A2.75 2.75 0 0114 3.75v.443c.572.055 1.14.122 1.706.2C17.053 4.582 18 5.75 18 7.099V8.5A1.5 1.5 0 0116.5 10H14v-.5a.5.5 0 00-.5-.5h-3a.5.5 0 00-.5.5v.5H3.5A1.5 1.5 0 012 8.5V7.1c0-1.35.947-2.52 2.294-2.707A41.714 41.714 0 016 4.193V3.75zm6 0v.5H8v-.5c0-.69.56-1.25 1.25-1.25h1.5c.69 0 1.25.56 1.25 1.25zM10 11c-.506 0-1.01.01-1.51.027L8 11h-.5a.5.5 0 000 1H8v.5a.5.5 0 001 0V12h2v.5a.5.5 0 001 0V12h.5a.5.5 0 000-1H12l-.49-.027A42.49 42.49 0 0110 11zM2 13.5v2.25A2.25 2.25 0 004.25 18h11.5A2.25 2.25 0 0018 15.75V13.5a2.998 2.998 0 01-1.5.385h-13A2.998 2.998 0 012 13.5z"
+                    clip-rule="evenodd" />
+                </svg>
+                Arbetslivserfarenhet
+              </div>
+              <div id="cv-experience-content">
+                <p class="cv-empty-hint">Dina arbetslivserfarenheter visas här under intervjun...</p>
+              </div>
+            </div>
+
+            <!-- Utbildning -->
+            <div class="cv-section" id="section-education">
+              <div class="cv-section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                  <path
+                    d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.168 1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+                </svg>
+                Utbildning
+              </div>
+              <div id="cv-education-content">
+                <p class="cv-empty-hint">Din utbildningsbakgrund visas här...</p>
+              </div>
+            </div>
+
+            <!-- Kompetenser -->
+            <div class="cv-section" id="section-skills">
+              <div class="cv-section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                  <path d="M11 2a1 1 0 10-2 0v6.268A2 2 0 008 10a2 2 0 104 0 2 2 0 00-1-1.732V2z" />
+                  <path
+                    d="M2.532 14.494a.75.75 0 10-.988 1.124A8.99 8.99 0 0010 18a8.99 8.99 0 008.456-2.382.75.75 0 00-.988-1.124 7.49 7.49 0 01-8.936 0zm-.483-4.634a.75.75 0 00-1.44.413A9 9 0 005.27 15.4a.75.75 0 101.174-.937 7.5 7.5 0 01-4.395-4.603zm13.29.462a7.5 7.5 0 01-4.395 4.603.75.75 0 001.174.937 9 9 0 004.66-5.127.75.75 0 00-1.44-.413z" />
+                </svg>
+                Kompetenser
+              </div>
+              <div id="cv-skills-content">
+                <p class="cv-empty-hint">Dina kompetenser läggs till allt eftersom...</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Cover Letter Document -->
+        <div class="cl-document hidden" id="cl-document">
+          <div class="cl-header">
+            <div id="cl-name">Ditt Namn</div>
+            <div id="cl-contact" class="cl-contact-info">E-post • Telefon • Plats</div>
+          </div>
+          <div id="cl-content">
+            <p class="cv-empty-hint">Ditt personliga brev skapas här när vi börjar diskutera dina specifika mål och
+              erfarenheter...</p>
+          </div>
+          <div class="cl-footer">
+            Med vänliga hälsningar,<br>
+            <strong id="cl-footer-name">Ditt Namn</strong>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Error Toast -->
+  <div class="error-toast" id="error-toast" role="alert" aria-live="assertive"></div>
+
+  <!-- ──────────────────────────────────────────────────────
+       SCRIPTS (ordning är viktig!)
+       1. config.js    — API-nyckel & Firebase Config
+       2. db.js (mod)  — Firestore-persistens
+       3. ai.js        — Gemini API + Master-Prompt
+       4. canvas.js    — Real-tids Canvas-motor
+       5. chat.js      — Chat UI
+       ─────────────────────────────────────────────────── -->
+  <script src="js/config.js"></script>
+
+  <script src="js/ai.js"></script>
+  <script src="js/canvas.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/voice.js"></script>
+  <!-- PDF Export Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    /** Uppdaterar UI baserat på auth-status (anropas från db.js) */
+    window.updateAuthUI = async function (user) {
+      console.log("updateAuthUI anropad med user:", user ? user.email : "null");
+      const gate = document.getElementById('login-gate');
+      const loginBtn = document.getElementById('login-btn');
+      const userInfo = document.getElementById('user-info');
+      const userAvatar = document.getElementById('user-avatar');
+
+      if (user) {
+        // Loggad in: Göm gate, visa top bar info
+        if (gate) gate.classList.add('hidden');
+        if (loginBtn) loginBtn.classList.add('hidden');
+        if (userInfo) userInfo.classList.remove('hidden');
+        if (user && userAvatar) {
+          userAvatar.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || user.email);
+          userAvatar.title = user.displayName || user.email;
+        }
+
+        // Starta laddning av session om det är första gången vi ser användaren i denna sidvisning
+        if (!window.sessionInitialized) {
+          window.sessionInitialized = true;
+          // initSession kommer anropas i module-scripten när DB är klar
+          if (window.initSession) window.initSession();
+        }
+      } else {
+        // Utloggad: Visa gate, göm top bar info
+        if (gate) gate.classList.remove('hidden');
+        if (loginBtn) loginBtn.classList.remove('hidden');
+        if (userInfo) userInfo.classList.add('hidden');
+      }
+    };
+  </script>
+  <script type="module">
+    import { saveSession, loadSession, exportSessionToJson, parseImportedSession, login, logout, loginWithEmail, registerWithEmail } from './js/db.js';
+
+    // Bridge for legacy scripts (ai.js, chat.js, etc.)
+    window.DB = { saveSession, loadSession, exportSessionToJson, parseImportedSession, login, logout, loginWithEmail, registerWithEmail };
+
+    // ── Initialisering ──────────────────────────────────
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Förbered UI
+      initVoiceAndMedia();
+      document.getElementById('print-btn').addEventListener('click', exportPDF);
+      document.getElementById('print-btn-2').addEventListener('click', exportPDF);
+      document.getElementById('download-txt-btn').addEventListener('click', exportTXT);
+      document.getElementById('share-session-btn').addEventListener('click', shareSession);
+      document.getElementById('export-session-btn').addEventListener('click', handleExportSession);
+      document.getElementById('import-session-btn').addEventListener('click', () => document.getElementById('import-session-input').click());
+      document.getElementById('import-session-input').addEventListener('change', handleImportSession);
+
+      // Inloggning via Gate
+      const gateLoginBtn = document.getElementById('gate-login-btn');
+      if (gateLoginBtn) gateLoginBtn.addEventListener('click', login);
+
+      // E-post Auth Logic
+      const emailForm = document.getElementById('email-auth-form');
+      const authEmail = document.getElementById('auth-email');
+      const authPassword = document.getElementById('auth-password');
+      const authSubmitBtn = document.getElementById('auth-submit-btn');
+      const toggleBtn = document.getElementById('toggle-auth-mode');
+      const gateTitle = document.getElementById('gate-title');
+
+      let isRegisterMode = false;
+
+      toggleBtn?.addEventListener('click', () => {
+        isRegisterMode = !isRegisterMode;
+        gateTitle.textContent = isRegisterMode ? 'Skapa konto' : 'Välkommen tillbaka';
+        authSubmitBtn.textContent = isRegisterMode ? 'Skapa konto' : 'Logga in';
+        toggleBtn.textContent = isRegisterMode ? 'Har du redan ett konto? Logga in' : 'Inget konto? Registrera dig här';
+      });
+
+      emailForm?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = authEmail.value;
+        const pass = authPassword.value;
+
+        try {
+          if (isRegisterMode) {
+            await registerWithEmail(email, pass);
+          } else {
+            await loginWithEmail(email, pass);
+          }
+        } catch (err) {
+          // Fel hanteras redan i db.js med alerts
+        }
+      });
+
+      // Inloggning / Utloggning (Top Bar)
+      const loginBtn = document.getElementById('login-btn');
+      if (loginBtn) loginBtn.addEventListener('click', login);
+
+      const logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn) logoutBtn.addEventListener('click', logout);
+
+      // Ny session
+      const newSessionBtn = document.getElementById('new-session-btn');
+      if (newSessionBtn) {
+        newSessionBtn.addEventListener('click', () => {
+          if (confirm('Vill du rensa ALLT och starta om? Detta raderar även sparad historik lokalt.')) {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = window.location.pathname;
+          }
+        });
+      }
+    });
+
+    /** Initierar sessionen (laddar från Firestore) */
+    window.initSession = async function () {
+      let historyToLoad = [];
+      if (window.DB) {
+        try {
+          const sessionData = await window.DB.loadSession();
+          if (sessionData && sessionData.cvState) {
+            console.log("Återställer session från molnet...");
+            Object.assign(cvState, sessionData.cvState);
+            renderCanvas();
+            historyToLoad = sessionData.history || [];
+
+            if (historyToLoad.length > 0) {
+              const messagesContainer = document.getElementById('chat-messages');
+              messagesContainer.innerHTML = '';
+              historyToLoad.forEach(msg => {
+                if (msg.role !== 'system') {
+                  // Normalisera Gemini-rollen 'model' till 'ai' för korrekt rendering
+                  const displayRole = msg.role === 'model' ? 'ai' : msg.role;
+                  addMessageToChat(displayRole, msg.parts[0].text);
+                }
+              });
+            }
+          }
+        } catch (e) {
+          console.warn("Kunde inte ladda session:", e);
+        }
+      }
+
+      // Initiera chat-logik (lyssnare osv)
+      if (historyToLoad.length === 0) {
+        initChat();
+      } else {
+        syncChatHistory(historyToLoad);
+        initChat(true);
+      }
+    }
+
+    /** Exporterar det aktiva dokumentet till en proffsig PDF */
+    function exportPDF() {
+      const isCoverLetter = document.body.classList.contains('view-cover-letter');
+      const element = isCoverLetter ? document.getElementById('cl-document') : document.getElementById('cv-document');
+      const filename = isCoverLetter ? 'Personligt_Brev.pdf' : 'CV.pdf';
+
+      element.classList.add('pdf-export-active');
+
+      const opt = {
+        margin: [10, 10],
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        element.classList.remove('pdf-export-active');
+      });
+    }
+
+    /** Exporterar det aktiva dokumentet som en textfil */
+    function exportTXT() {
+      const isCoverLetter = document.body.classList.contains('view-cover-letter');
+      const text = window.formatCvAsText();
+      const filename = isCoverLetter ? 'Personligt_Brev.txt' : 'CV.txt';
+
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
+    /** Kopierar en unik länk till denna session så att man kan fortsätta senare */
+    async function shareSession() {
+      const sessionId = localStorage.getItem("careercoach_session_id");
+      if (!sessionId) {
+        alert("Ingen aktiv session hittades att spara.");
+        return;
+      }
+
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set('session', sessionId);
+
+      try {
+        await navigator.clipboard.writeText(url.toString());
+        alert("Sessionslänk kopierad till urklipp! 🔗\n\nDu kan nu spara länken som ett bokmärke eller skicka den till en annan enhet för att fortsätta där.");
+      } catch (err) {
+        console.error("Kunde inte kopiera länk:", err);
+        alert("Kunde inte kopiera länk automatiskt. Din sessions-ID är: " + sessionId);
+      }
+    }
+
+    /** Exporterar sessionen som en fil */
+    function handleExportSession() {
+      if (typeof window.cvState === 'undefined' || typeof window.chatHistory === 'undefined') {
+        alert("Ingen data att exportera ännu.");
+        return;
+      }
+      window.DB.exportSessionToJson(window.cvState, window.chatHistory);
+    }
+
+    /** Importerar en session från en uppladdad fil */
+    function handleImportSession(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const data = window.DB.parseImportedSession(e.target.result);
+        if (data) {
+          if (confirm("Vill du ladda in den sparade sessionen? Detta kommer att skriva över ditt nuvarande arbete.")) {
+            // Uppdatera global state
+            window.cvState = data.cvState;
+            window.chatHistory = data.history;
+
+            // Spara till localStorage så Firestore hänger med
+            localStorage.setItem("careercoach_cv_state", JSON.stringify(window.cvState));
+            localStorage.setItem("careercoach_chat_history", JSON.stringify(window.chatHistory));
+
+            // Re-rendera allt (chat.js renderChat och canvas.js renderCanvas)
+            if (typeof renderCanvas === 'function') renderCanvas();
+            if (typeof renderChat === 'function') renderChat();
+
+            alert("Session laddad!");
+          }
+        } else {
+          alert("Kunde inte tolka filen. Kontrollera att det är en giltig CareerCoach-session.");
+        }
+      };
+      reader.readAsText(file);
+      // Reset input så man kan ladda samma fil igen
+      event.target.value = "";
+    }
+
+    // Toggle-logik för flikar
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const view = btn.dataset.view;
+
+        // Uppdatera knappar
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Uppdatera body-klass för CSS/Logik
+        if (view === 'cover-letter') {
+          document.body.classList.add('view-cover-letter');
+        } else {
+          document.body.classList.remove('view-cover-letter');
+        }
+
+        // Re-rendera canvas
+        if (typeof renderCanvas === 'function') {
+          renderCanvas();
+        }
+      });
+    });
+
+    function togglePrivacyInfo() {
+      const modal = document.getElementById('privacy-info');
+      modal.classList.toggle('hidden');
+    }
+    // Exponera till window så onclick-attribut fungerar
+    window.togglePrivacyInfo = togglePrivacyInfo;
+  </script>
+
+  <!-- Print styles — visa bara CV-dokumentet -->
+  <style>
+    .auth-section {
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--color-border);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* GDPR UI — Definierat i inline <style> block ovan (rad 242-280) */
+
+    .privacy-content h3 {
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    .privacy-content p {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    @media print {
+
+      .chat-panel,
+      .top-bar,
+      .canvas-header,
+      .canvas-progress-bar {
+        display: none !important;
+      }
+
+      .app-body {
+        height: auto;
+      }
+
+      .main-split {
+        display: block;
+      }
+
+      .canvas-panel {
+        min-height: 100vh;
+      }
+
+      .canvas-scroll {
+        padding: 0;
+        overflow: visible;
+      }
+
+      .cv-document {
+        box-shadow: none;
+        border: none;
+      }
+    }
+  </style>
+
+</body>
+
+</html>

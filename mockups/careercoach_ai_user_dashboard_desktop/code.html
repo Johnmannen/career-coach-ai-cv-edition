@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="light" lang="sv"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CareerCoach AI - Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#5842E3",
+              "background-light": "#F8FAFC",
+              "background-dark": "#0F172A",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "1rem",
+              'xl': '1.5rem',
+              '2xl': '2rem',
+            },
+          },
+        },
+      };
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-200">
+<nav class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16 items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-bold text-2xl">C</div>
+<div class="flex flex-col">
+<span class="text-xl font-bold text-slate-900 dark:text-white leading-tight">CareerCoach AI</span>
+<span class="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 font-bold">AI-GUIDE</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-8 mr-8">
+<a class="text-primary font-semibold" href="#">Hem</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Chat</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Arkiv</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Profil</a>
+</div>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors relative">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<div class="w-10 h-10 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden border-2 border-slate-100 dark:border-slate-800">
+<img alt="Användarprofil" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0chGM54aGTFrrsh4uxRfn3JbC5SxuuMdG3plEmGdfgKk_wWTfiUT5Nzpr6PxbQlrdFKfkfpmcJpUDCSBjZTM1Nfw8ZTOEfBZYS35_4acGhA4wZS0loE0AhNsArLlO70KQBZZb9ScynFibzh--02ubma1sAqYzyv3ZIJJoko_tsT6Em3eaKltOs1FvTohRkXcwSMSKoRMx6YDUmQiXn_roA5VjckgSkLvFnm0ewu7wfITkLNx6kT-ffXdqmW9iJx8Xh4Nq0BoRdLo"/>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<div class="lg:col-span-8 space-y-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-2">Välkommen tillbaka, Ny!</h1>
+<p class="text-lg text-slate-500 dark:text-slate-400">Din karriärresa ser ljus ut. Vad vill du göra idag?</p>
+</div>
+<button class="bg-primary hover:bg-indigo-700 text-white px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] shadow-xl shadow-primary/20">
+<span class="material-icons-outlined">add</span>
+                        Ny Intervju
+                    </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="md:col-span-2 bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-icons-outlined text-orange-500 text-sm">stars</span>
+<span class="text-xs font-bold uppercase tracking-widest text-orange-500">Profilstyrka</span>
+</div>
+<div class="flex flex-col">
+<span class="text-5xl font-extrabold text-slate-900 dark:text-white mb-4">85%</span>
+<div class="w-full h-3 bg-slate-100 dark:bg-slate-700 rounded-full mb-4 overflow-hidden">
+<div class="h-full bg-primary w-[85%] rounded-full"></div>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 italic">Lägg till "Utbildning" för att nå 100%.</p>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-icons-outlined text-primary text-sm">description</span>
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Dokument</span>
+</div>
+<span class="text-5xl font-extrabold text-slate-900 dark:text-white mb-4 block">0</span>
+<p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">Aktiva CV:n och personliga brev i molnet.</p>
+</div>
+</div>
+<div class="bg-emerald-50 dark:bg-emerald-950/30 p-6 rounded-2xl border border-emerald-100 dark:border-emerald-900/50">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-icons-outlined text-emerald-600 dark:text-emerald-400 text-sm">trending_up</span>
+<span class="text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Insikt</span>
+</div>
+<p class="text-lg font-medium text-slate-800 dark:text-slate-200">"ATS-optimering" är din främsta styrka just nu.</p>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Senaste Dokument</h2>
+<div class="bg-slate-50 dark:bg-slate-800/50 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-3xl p-12 flex flex-col items-center justify-center text-center">
+<div class="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center shadow-sm mb-4">
+<span class="material-icons-outlined text-slate-400 text-3xl">folder_open</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 italic max-w-xs">Inga dokument skapade än. Starta en intervju för att börja!</p>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Snabblänkar</h2>
+<div class="space-y-3">
+<a class="group flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-primary/30 transition-all" href="#">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/40 rounded-xl flex items-center justify-center text-primary">
+<span class="material-icons-outlined">chat_bubble_outline</span>
+</div>
+<span class="font-bold text-slate-700 dark:text-slate-200">Träna på intervju</span>
+</div>
+<span class="material-icons-outlined text-slate-300 group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+<a class="group flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-primary/30 transition-all" href="#">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/40 rounded-xl flex items-center justify-center text-primary">
+<span class="material-icons-outlined">folder</span>
+</div>
+<span class="font-bold text-slate-700 dark:text-slate-200">Mina dokument</span>
+</div>
+<span class="material-icons-outlined text-slate-300 group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+<div class="relative">
+<a class="group flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-primary/30 transition-all" href="#">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/40 rounded-xl flex items-center justify-center text-primary">
+<span class="material-icons-outlined">person_outline</span>
+</div>
+<span class="font-bold text-slate-700 dark:text-slate-200">Uppdatera profil</span>
+</div>
+<span class="material-icons-outlined text-slate-300 group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+<div class="absolute -bottom-2 left-6 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1 shadow-lg">
+<span class="w-1 h-1 bg-white rounded-full"></span>
+                                1 Issue
+                                <span class="material-icons-outlined text-[10px]">close</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-slate-900 rounded-3xl p-6 text-white overflow-hidden relative group">
+<div class="relative z-10">
+<span class="inline-block px-3 py-1 bg-primary rounded-full text-[10px] font-bold uppercase mb-4">Guide</span>
+<h3 class="text-2xl font-bold mb-4">Framtidens Karriärstrategi</h3>
+<a class="flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all" href="#">
+                            Läs dokument 
+                            <span class="material-icons-outlined">arrow_forward</span>
+</a>
+</div>
+<div class="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 opacity-50"></div>
+<div class="absolute -bottom-12 -right-12 w-48 h-48 bg-primary/20 rounded-full blur-3xl"></div>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] md:hidden z-50">
+<div class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800 rounded-full px-6 py-3 flex items-center justify-between shadow-2xl">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-icons-outlined">home</span>
+<span class="text-[10px] font-bold">Hem</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-icons-outlined">chat_bubble_outline</span>
+<span class="text-[10px] font-bold">Chat</span>
+</a>
+<div class="w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center -mt-10 shadow-xl shadow-primary/40 border-4 border-white dark:border-slate-800">
+<span class="material-icons-outlined">add</span>
+</div>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-icons-outlined">folder</span>
+<span class="text-[10px] font-bold">Arkiv</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-icons-outlined">person_outline</span>
+<span class="text-[10px] font-bold">Profil</span>
+</a>
+</div>
+</div>
+<script>
+        // Check for saved theme preference or default to light
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+</body></html>

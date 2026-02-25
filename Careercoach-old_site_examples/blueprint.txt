@@ -1,0 +1,22 @@
+# **App Name**: CareerCoach AI
+
+## Core Features:
+
+- AI Career Interviewer: Engage users in an interactive interview-style conversation to gather comprehensive and relevant information for their CVs and cover letters.
+- Contextual Information Retrieval: Enable the AI tool to retrieve and integrate relevant facts from the user's saved data or an external knowledge base like NotebookLM during the interview process.
+- Dynamic CV Creator: Automatically generate a professionally structured CV based on the information meticulously gathered through the AI interview.
+- Personalized Cover Letter Tool: Craft tailored cover letters for specific job applications, leveraging data collected by the AI tool and adapting to provided job description insights.
+- User Profile & Data Storage: Securely store and manage users' personal details, work experience, education, and generated documents within a Firestore database.
+- Document Review & Editing: Provide an intuitive interface for users to review, refine, and download their AI-generated CVs and cover letters.
+- Secure User Authentication: Allow users to create secure accounts and log in to manage their career documents and AI interactions across sessions.
+- AI Prompt - Jobbcoachen: The detailed persona and instructions for the AI agent, including interview techniques, cultural translation, and delivery guidelines.
+
+## Style Guidelines:
+
+- Primary color: A sophisticated indigo (#4C3399) to convey trust, intelligence, and a forward-thinking approach. This shade avoids typical corporate clichés, opting for depth and contemporary elegance.
+- Background color: A serene light grey with an indigo tint (#F4F2F7), providing a clean and approachable canvas that subtly echoes the primary hue while ensuring high readability in a light theme.
+- Accent color: A vibrant yet professional blue (#2C89F0), chosen for its energetic contrast to the primary indigo. This bright accent is reserved for interactive elements like buttons and progress indicators, drawing the eye without overwhelming.
+- Headline font: 'Space Grotesk', a proportional sans-serif for its modern, slightly tech-infused yet professional aesthetic, perfect for capturing attention. Body font: 'Inter', a clean and highly readable grotesque sans-serif to ensure clarity and professionalism for all content, from AI conversations to CV details.
+- Use sleek, minimalist line icons that subtly convey concepts of career progression, personal growth, communication, and document creation, maintaining a clean and professional appearance.
+- Adopt a clean, spacious, and modular layout with clear separation between content sections. Emphasize a conversational interface for AI interactions, paired with well-structured forms and document previews for optimal user experience.
+- Incorporate subtle and elegant animations, such as smooth transitions for content loading and state changes, and gentle feedback for user inputs, enhancing the sense of a responsive and polished application.
