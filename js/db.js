@@ -200,7 +200,7 @@ export async function loadSession() {
             const sessionsRef = collection(db, "users", user.uid, "sessions");
             const q = query(sessionsRef, orderBy("lastUpdated", "desc"), limit(1));
             const querySnapshot = await getDocs(q);
-            
+
             if (!querySnapshot.empty) {
                 const latestDoc = querySnapshot.docs[0];
                 // Säkerställ att den lokala id:n matchar
@@ -244,12 +244,12 @@ export function exportSessionToJson(cvState, history) {
 
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `CareerCoach_Session_${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `careercoach_session_${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
 
