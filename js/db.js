@@ -10,7 +10,12 @@ import {
     setDoc,
     getDoc,
     deleteDoc,
-    serverTimestamp
+    serverTimestamp,
+    collection,
+    query,
+    orderBy,
+    limit,
+    getDocs
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import {
     getAuth,
@@ -187,8 +192,27 @@ export function saveSession(cvState, history) {
 export async function loadSession() {
     if (!db) return null;
 
-    const sessionId = getSessionId();
     const user = auth?.currentUser;
+
+    if (user) {
+        try {
+            // Hämta användarens senast aktiva session, även vid byte av enhet
+            const sessionsRef = collection(db, "users", user.uid, "sessions");
+            const q = query(sessionsRef, orderBy("lastUpdated", "desc"), limit(1));
+            const querySnapshot = await getDocs(q);
+            
+            if (!querySnapshot.empty) {
+                const latestDoc = querySnapshot.docs[0];
+                // Säkerställ att den lokala id:n matchar
+                localStorage.setItem("careercoach_session_id", latestDoc.id);
+                return latestDoc.data();
+            }
+        } catch (error) {
+            console.error("Kunde inte söka efter användarens senaste session:", error);
+        }
+    }
+
+    const sessionId = getSessionId();
 
     const sessionRef = user
         ? doc(db, "users", user.uid, "sessions", sessionId)

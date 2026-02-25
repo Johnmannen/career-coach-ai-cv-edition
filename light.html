@@ -4,13 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CareerCoach AI — Light Mode</title>
-    <!-- Vi använder samma typsnitt som stora sajten -->
+    <title>CareerCoach AI — Light Edition</title>
+    <!-- Samma typsnitt som huvudappen -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css"> <!-- Återanvänd style för knappar/login-gate -->
     <style>
         :root {
-            --primary: #2563eb;
-            --bg: #f8fafc;
+            --primary: #4C3399;
+            --accent: #2C89F0;
+            --bg: #F4F2F7;
             --text: #1e293b;
         }
 
@@ -24,6 +26,7 @@
             height: 100vh;
         }
 
+        /* Minimal Header */
         header {
             padding: 1rem;
             background: white;
@@ -36,19 +39,33 @@
         .logo {
             font-weight: 700;
             color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .version-badge {
             font-size: 0.75rem;
-            padding: 2px 8px;
-            background: #dbeafe;
+            padding: 4px 8px;
+            background: #e0e7ff;
+            color: var(--primary);
             border-radius: 99px;
+            font-weight: bold;
+        }
+
+        /* Chat Layout */
+        #chat-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            display: none; /* Döljs inledningsvis */
         }
 
         #chat-container {
             flex: 1;
             overflow-y: auto;
-            padding: 1rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -57,25 +74,36 @@
             width: 100%;
         }
 
+        /* Meddelanden */
         .message {
-            max-width: 80%;
-            padding: 0.75rem 1rem;
+            max-width: 85%;
+            padding: 1rem;
             border-radius: 12px;
             line-height: 1.5;
+            animation: fadeIn 0.3s ease-out;
+            font-size: 0.95rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .bot {
             background: white;
             border: 1px solid #e2e8f0;
             align-self: flex-start;
+            border-bottom-left-radius: 4px;
         }
 
         .user {
             background: var(--primary);
             color: white;
             align-self: flex-end;
+            border-bottom-right-radius: 4px;
         }
 
+        /* Input area */
         footer {
             padding: 1rem;
             background: white;
@@ -89,74 +117,165 @@
             gap: 0.5rem;
         }
 
-        input {
+        input[type="text"] {
             flex: 1;
-            padding: 0.75rem;
-            border: 1px solid #e2e8f0;
+            padding: 0.8rem;
+            border: 1px solid #cbd5e1;
             border-radius: 8px;
             outline: none;
+            font-size: 1rem;
         }
 
-        input:focus {
-            border-color: var(--primary);
+        input[type="text"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(44, 137, 240, 0.2);
         }
 
-        button {
-            background: var(--primary);
+        button.send-btn {
+            background: var(--accent);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
+            padding: 0 1.5rem;
             border-radius: 8px;
             cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Typindikator (Tänker...) */
+        .typing {
+            font-size: 0.8rem;
+            color: #64748b;
+            align-self: flex-start;
+            margin-left: 1rem;
+            display: none;
+        }
+
+        /* Logout button */
+        .logout-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.85rem;
         }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <div class="logo">CareerCoach AI</div>
-        <div class="version-badge">LIGHT MODE v1.0</div>
-    </header>
+    <!-- LOGIN GATE: Tar texter från landing-page för att vara inbjudande -->
+    <div id="login-gate" class="login-gate">
+        <div class="login-gate-content" style="max-width: 500px; text-align: center;">
+            <div class="brand-logo-large" style="justify-content: center;">
+                <h1>CareerCoach AI</h1>
+            </div>
+            
+            <h2 style="font-size: 1.8rem; margin: 16px 0 8px 0; color: var(--color-primary);">Ditt CV. Omskrivet av AI.</h2>
+            <p style="color: var(--color-text-mid); line-height: 1.6; margin-bottom: 24px; font-size: 0.95rem;">
+                Jobbcoachen intervjuar dig steg för steg och bygger ett professionellt CV i realtid. Inga formulär. Ingen huvudvärk. Bara en konversation som tar dig till nästa nivå. (Light Edition)
+            </p>
 
-    <main id="chat-container">
-        <!-- Här hamnar meddelandena -->
-    </main>
+            <div class="login-gate-card" style="text-align: left;">
+                <h3 id="gate-title" style="margin-top: 0;">Logga in för att fortsätta</h3>
+                <p id="gate-desc" style="font-size: 0.85rem; color: #64748b;">Vi sparar automatiskt din historik så att du kan fortsätta när som helst.</p>
 
-    <footer>
-        <div class="input-area">
-            <input type="text" id="userInput" placeholder="Skriv ditt svar här...">
-            <button id="sendBtn">Skicka</button>
+                <button id="gate-login-btn" class="btn-primary-v2" style="width: 100%; justify-content: center; margin-top: 16px; background-color: white; color: #333; border: 1px solid #ccc;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.16H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.84l3.66-2.75z" fill="#FBBC05" />
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.16l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+                    </svg>
+                    Fortsätt med Google
+                </button>
+
+                <div class="login-divider" style="margin: 20px 0;">
+                    <span style="background: white; padding: 0 10px; color: #888; font-size: 0.8rem; position: relative; z-index: 2;">eller e-post</span>
+                    <hr style="margin-top: -10px; border: 0; border-top: 1px solid #eee;">
+                </div>
+
+                <form id="email-auth-form" style="display: flex; flex-direction: column; gap: 12px;">
+                    <input type="email" id="auth-email" placeholder="E-postadress" required class="input-field-v2" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                    <input type="password" id="auth-password" placeholder="Lösenord" required class="input-field-v2" minlength="6" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                    <button type="submit" id="auth-submit-btn" class="btn-primary-v2" style="width: 100%; justify-content: center; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                        Logga in
+                    </button>
+                </form>
+
+                <button id="toggle-auth-mode" class="toggle-auth-link" style="background: none; border: none; color: var(--accent); cursor: pointer; text-decoration: underline; font-size: 0.85rem; margin-top: 16px; width: 100%;">
+                    Inget konto? Registrera dig här
+                </button>
+            </div>
         </div>
-    </footer>
+    </div>
 
-    <!-- Vi laddar in din befintliga logik -->
+    <!-- CHAT VIEW -->
+    <div id="chat-wrapper">
+        <header>
+            <div class="logo">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                    <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" />
+                </svg>
+                CareerCoach AI
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="version-badge">LIGHT MODE</div>
+                <button id="logout-btn" class="logout-btn">Logga ut</button>
+            </div>
+        </header>
+
+        <main id="chat-container">
+            <!-- Meddelanden laddas dynamiskt hit -->
+        </main>
+        
+        <div id="typing-indicator" class="typing">Jobbcoachen tänker...</div>
+
+        <footer>
+            <div class="input-area">
+                <input type="text" id="userInput" placeholder="Skriv ditt meddelande här..." autocomplete="off">
+                <button id="sendBtn" class="send-btn">Skicka</button>
+            </div>
+            <div style="text-align: center; margin-top: 8px; font-size: 0.75rem; color: #94a3b8;">
+                Din data sparas automatiskt i molnet.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
+    <!-- Moduler (Global version för kompbilitet med module scripts) -->
     <script src="js/config.js"></script>
-    <script src="js/db.js"></script>
     <script src="js/ai.js"></script>
 
-    <script>
-        // Minimal chathantering för Light-versionen
+    <script type="module">
+        import { saveSession, loadSession, login, logout, loginWithEmail, registerWithEmail } from './js/db.js';
+
+        let chatHistory = [];
+        let cvState = {}; // Behövs för kompatibilitet med db.js saveSession, även om Light Mode inte visar Canvas
+
         const container = document.getElementById('chat-container');
         const input = document.getElementById('userInput');
         const btn = document.getElementById('sendBtn');
+        const typingIndicator = document.getElementById('typing-indicator');
+        
+        const gate = document.getElementById('login-gate');
+        const chatWrapper = document.getElementById('chat-wrapper');
 
+        // Hantera meddelanden
         function addMessage(text, type) {
             const div = document.createElement('div');
             div.className = `message ${type}`;
-            div.textContent = text;
+            // Simpel markdown rendering för bold och radbrytningar
+            let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            formattedText = formattedText.replace(/\n/g, '<br>');
+            div.innerHTML = formattedText;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
         }
-
-        // Starta boten (vi återanvänder din logik från ai.js)
-        window.onload = () => {
-            addMessage("Hej! Jag är Jobbcoachen (Light). Vi kör på svenska men du kan byta när du vill. Vill du optimera ett CV eller bygga ett nytt?", "bot");
-        };
 
         async function handleSend() {
             const val = input.value.trim();
@@ -164,15 +283,116 @@
 
             addMessage(val, "user");
             input.value = '';
+            input.disabled = true;
+            btn.disabled = true;
+            typingIndicator.style.display = 'block';
 
-            // Här anropar vi din riktiga AI-funktion
-            const response = await sendToGemini(val, []);
-            addMessage(response.response, "bot");
+            // Skickar till Gemini med befintlig historik
+            const result = await sendToGemini(val, chatHistory);
+
+            typingIndicator.style.display = 'none';
+            input.disabled = false;
+            btn.disabled = false;
+            input.focus();
+
+            if (result.response) {
+                addMessage(result.response, "bot");
+                
+                // Tracka historiken
+                chatHistory.push(
+                    { role: "user", parts: [{ text: val }] },
+                    { role: "model", parts: [{ text: result.response }] }
+                );
+
+                // Spara sessionen (inklusive dolda UI-uppdateringar för CV ifall vi byter till stora sajten sen)
+                if (result.canvasUpdate) {
+                    cvState = Object.assign(cvState, result.canvasUpdate);
+                }
+                saveSession(cvState, chatHistory);
+            }
         }
 
         btn.onclick = handleSend;
         input.onkeypress = (e) => { if (e.key === 'Enter') handleSend(); };
+
+        // Authentication Hooks
+        window.updateAuthUI = async function (user) {
+            if (user) {
+                // Inloggad - Visa chat
+                gate.style.display = 'none';
+                chatWrapper.style.display = 'flex';
+                
+                // Ladda session från databasen
+                const sessionData = await loadSession();
+                if (sessionData && sessionData.history && sessionData.history.length > 0) {
+                    chatHistory = sessionData.history;
+                    cvState = sessionData.cvState || {};
+                    
+                    // Rendera historiken
+                    container.innerHTML = '';
+                    chatHistory.forEach(msg => {
+                        if (msg.role !== 'system') {
+                            const type = msg.role === 'model' ? 'bot' : 'user';
+                            addMessage(msg.parts[0].text, type);
+                        }
+                    });
+                } else if (chatHistory.length === 0) {
+                    // Starta ny konversation
+                    typingIndicator.style.display = 'block';
+                    const res = await sendToGemini("Hej! Jag är redo.", chatHistory);
+                    typingIndicator.style.display = 'none';
+                    
+                    addMessage(res.response, "bot");
+                    chatHistory.push(
+                        { role: "user", parts: [{ text: "Hej" }] },
+                        { role: "model", parts: [{ text: res.response }] }
+                    );
+                    saveSession(cvState, chatHistory);
+                }
+            } else {
+                // Skicka tillbaka till gate
+                gate.style.display = 'flex';
+                chatWrapper.style.display = 'none';
+            }
+        };
+
+        // Knyt event listeners för Login
+        document.getElementById('gate-login-btn').addEventListener('click', login);
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            chatHistory = [];
+            container.innerHTML = '';
+            logout();
+        });
+
+        // Email inloggning logic
+        const emailForm = document.getElementById('email-auth-form');
+        const authEmail = document.getElementById('auth-email');
+        const authPassword = document.getElementById('auth-password');
+        const toggleBtn = document.getElementById('toggle-auth-mode');
+        const gateTitle = document.getElementById('gate-title');
+        const authSubmitBtn = document.getElementById('auth-submit-btn');
+        let isRegisterMode = false;
+
+        toggleBtn.addEventListener('click', () => {
+            isRegisterMode = !isRegisterMode;
+            gateTitle.textContent = isRegisterMode ? 'Skapa konto' : 'Logga in för att fortsätta';
+            authSubmitBtn.textContent = isRegisterMode ? 'Skapa konto' : 'Logga in';
+            toggleBtn.textContent = isRegisterMode ? 'Har du redan ett konto? Logga in' : 'Inget konto? Registrera dig här';
+        });
+
+        emailForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = authEmail.value;
+            const pass = authPassword.value;
+            try {
+                if (isRegisterMode) {
+                    await registerWithEmail(email, pass);
+                } else {
+                    await loginWithEmail(email, pass);
+                }
+            } catch (err) { }
+        });
+
     </script>
 </body>
-
 </html>

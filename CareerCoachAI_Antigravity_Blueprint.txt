@@ -1,7 +1,10 @@
 # INSTRUKTIONSBOK: CareerCoach AI (Antigravity Migration)
 
 ## 1. Systemöversikt & Syfte
-Detta dokument fungerar som en samlad blueprint för att flytta CareerCoach AI från Firebase till Antigravity. Systemet ska erbjuda en stabil, interaktiv intervjuupplevelse som genererar CV:n i realtid via en Canvas-funktion.
+Detta dokument fungerar som en samlad blueprint för CareerCoach AI. Systemet är nu framgångsrikt migrerat till Google Drive (G:). Systemet ska erbjuda en stabil, interaktiv intervjuupplevelse som genererar CV:n i realtid via en Canvas-funktion.
+
+**Projektplats:** `G:\Min enhet\Utveckling\CareerCoach_AI_CVedition`
+**Status:** Migrering från C: till G: slutförd 2026-02-25.
 
 ## 2. Master-Prompt: Jobbcoachen (CV Edition)
 *Denna prompt är systemets kärna och får ej ändras eller kortas ner vid implementering:*
