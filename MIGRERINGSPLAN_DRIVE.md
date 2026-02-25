@@ -9,12 +9,12 @@ Du har helt rätt! Det är mycket säkrare och enklare att bara kopiera allt som
     *   Gå till din nuvarande mapp: `c:\Users\johnr\Documents\WebbApps\CareerCoach_AI_CVedition`.
     *   Högerklicka på mappen `CareerCoach_AI_CVedition` och välj **Kopiera**.
 3.  **Klistra in på Drive:**
-    *   Gå till din Google Drive (`G:\Min enhet\`).
-    *   Högerklicka på en tom yta och välj **Klistra in**.
+    *   Gå till din Google Drive: `G:\Min enhet\Utveckling\`.
+    *   Högerklicka på mappen **Utveckling** och välj **Klistra in**. (Det skapar då mappen `G:\Min enhet\Utveckling\CareerCoach_AI_CVedition`).
 4.  **Kör därifrån:**
     *   Nästa gång du vill jobba, öppna PowerShell och skriv:
         ```powershell
-        cd "G:\Min enhet\CareerCoach_AI_CVedition"
+        cd "G:\Min enhet\Utveckling\CareerCoach_AI_CVedition"
         antigravity
         ```
 
