@@ -32,3 +32,10 @@ Vi fokuserar på tre nyckeltal (KPI:er) som påverkar hur användaren upplever t
 
 ## Nästa steg
 Om Light-versionen upplevs som mycket bättre, kan vi överväga att göra den till "standard" för mobilanvändare eller personer med långsam uppkoppling.
+
+## Testresultat (2026-02-25)
+Vi genomförde ett hastighetstest direkt mot servrarna:
+*   **Vanlig sajt (`/`):** Laddade in sin första byte (TTFB) på ~756 ms. Denna version måste rendera Canvas-layout, hämta extra CSS och förbereda en mer grafisk upplevelse.
+*   **Light-sida (`/light.html`):** Laddade in på endast ~200 ms. Den är helt textbaserad, saknar onödig grafik och svarar i princip omedelbart.
+
+**Slutsats:** Light-versionen är formidabelt snabb och väl anpassad för prestanda. Vi har också integrerat inloggning och automatisk synkronisering av konversationen med molnet, så det finns ingen kompromiss på säkerhet eller spardata.

@@ -42,3 +42,8 @@ AI-agenten ska ha tillgång till följande resurser för att hämta fakta och ko
 * Design-skelett: En modulär layout med Space Grotesk för rubriker och Inter för brödtext.
 * Färger: Primär: Indigo (#4C3399), Accent: Blå (#2C89F0), Bakgrund: Ljusgrå (#F4F2F7).
 * Felhantering: Vid anslutningsfel ska ett vänligt felmeddelande visas istället för en krasch: "Hoppsan! Jag tappade anslutningen till mitt moln ett kort ögonblick. Kan du upprepa det du sa?".
+
+## 5. Versionshantering & Uppdateringar
+* **2026-02-25:** Uppdaterat systemet med full session-persistence över enheter för inloggade användare (`db.js = loadSession()`). Byggde om `light.html` till att inkludera inloggning med Google/E-post, direktkopplad mot molnets historik för kontinuerlig chat.
+* **Arkitektur:** Projektet publiceras kontinuerligt från lokal kopia på Google Drive (G:) via GitHub till Vercel (`coach.johngarp.click`).
+* **Canvas-status:** Fastställt att "Realtids-Canvas" bibehålls som ursprungligen tänkt (delad vy i realtid). Inga nya designändringar planeras för detta moment, utan systemet fokuserar på den ursprungliga split-screen designen som uppdaterar CV under chattens gång.
