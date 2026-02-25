@@ -1,43 +1,27 @@
-# Migreringsplan: CareerCoach AI -> Google Drive
+# Förenklad Migreringsplan: CareerCoach AI -> Google Drive
 
-Denna plan är framtagen för att säkert flytta ditt projekt från din lokala hårddisk till Google Drive, vilket ger dig automatisk backup och tillgång till dina filer från andra platser.
+Du har helt rätt! Det är mycket säkrare och enklare att bara kopiera allt som det är. Vi struntar i att skapa nya mappar inuti koden, det bara krånglar till det.
 
-## Förutsättningar
-*   **Google Drive for Desktop** installerat på din Windows-dator (viktigt: det ska skapa en virtuell hårddisk som oftast heter `G:`).
+## Steg-för-steg (Enkel version)
 
-## Steg 1: Förberedelse på Google Drive
-1.  Öppna Utforskaren (File Explorer).
-2.  Gå till din Google Drive-enhet (oftast `G:`).
-3.  Gå in i mappen "Min enhet" (My Drive).
-4.  Skapa en ny huvudmapp som heter `Utveckling` (om du inte redan har en).
-5.  Inuti den, skapa mappen: `CareerCoach_AI`.
+1.  **Installera:** Se till att [Google Drive för Desktop](https://www.google.com/drive/download/) är installerat (så att du har din `G:`-enhet).
+2.  **Kopiera projektet:**
+    *   Gå till din nuvarande mapp: `c:\Users\johnr\Documents\WebbApps\CareerCoach_AI_CVedition`.
+    *   Högerklicka på mappen `CareerCoach_AI_CVedition` och välj **Kopiera**.
+3.  **Klistra in på Drive:**
+    *   Gå till din Google Drive (`G:\Min enhet\`).
+    *   Högerklicka på en tom yta och välj **Klistra in**.
+4.  **Kör därifrån:**
+    *   Nästa gång du vill jobba, öppna PowerShell och skriv:
+        ```powershell
+        cd "G:\Min enhet\CareerCoach_AI_CVedition"
+        antigravity
+        ```
 
-## Steg 2: Skapa undermappar (Rekommenderad struktur)
-Inuti `CareerCoach_AI`, skapa följande mappar för att hålla ordning:
-1.  📂 `app-src` — Här kommer själva koden att bo (din nuvarande webbapp).
-2.  📂 `assets-raw` — Här lägger du original-filer (t.ex. den där 18MB herobilden om du vill spara den, eller videofiler).
-3.  📂 `docs` — För strategi, budget och anteckningar.
-4.  📂 `prompts` — För att spara systeminstruktioner och AI-logik separat.
-
-## Steg 3: Flytta filerna
-1.  Öppna din nuvarande projektmapp: `c:\Users\johnr\Documents\WebbApps\CareerCoach_AI_CVedition`.
-2.  Markera **allt** (Ctrl + A) och välj **Kopiera**.
-3.  Gå till din nya mapp på Drive: `G:\Min enhet\Utveckling\CareerCoach_AI\app-src`.
-4.  Välj **Klistra in**.
-
-## Steg 4: Peka om Antigravity
-Nästa gång du ska jobba, gör du så här:
-1.  Öppna PowerShell.
-2.  Skriv: `cd "G:\Min enhet\Utveckling\CareerCoach_AI\app-src"` (använd citationstecken om det är mellanslag i namnet).
-3.  Skriv: `antigravity`.
-
-## Steg 5: GitHub Desktop (Viktigt för Deployment)
-Eftersom Vercel hämtar kod från GitHub måste vi tala om för GitHub Desktop var filerna finns nu:
-1.  Öppna GitHub Desktop.
-2.  Gå till **File** -> **Add local repository**.
-3.  Bläddra fram till `G:\Min enhet\Utveckling\CareerCoach_AI\app-src`.
-4.  Klicka på **Add repository**.
-5.  Om den frågar om du vill "Trust this folder", svara Ja.
+## Varför detta är bättre:
+*   **Ingen risk för fel:** Vi flyttar hela "huset" istället för att försöka sortera möblerna.
+*   **Strukturen bevaras:** Alla länkar och filer kommer ligga exakt där de ska.
+*   **GitHub Desktop:** Om du installerar GitHub Desktop sen, pekar du det bara på den nya platsen på `G:`.
 
 ---
-*Planen skapad av din AI-coach 2026-02-25*
+*Uppdaterad plan efter feedback 2026-02-25*
