@@ -1840,8 +1840,24 @@ h4 {
   }
 
   .canvas-tabs {
-    padding: 12px 16px;
+    padding: 8px 16px;
     overflow-x: auto;
+  }
+
+  .canvas-header {
+    padding: 8px 16px;
+  }
+
+  .canvas-icon {
+    display: none;
+  }
+
+  .canvas-header-left p {
+    display: none;
+  }
+
+  .canvas-header-left h2 {
+    font-size: 0.85rem;
   }
 
   .canvas-scroll {
